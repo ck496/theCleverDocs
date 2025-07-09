@@ -19,24 +19,24 @@ const FeaturesSection = () => {
 
   const features = [
     {
-      title: "Interactive Onboarding",
-      text: "Guide new team members through personalized onboarding journeys with interactive checklists and resources.",
-      icon: FiUsers,
+      title: "Rapid Blog Generation",
+      text: "Transform raw notes into well-structured, accurate, and typo-free tech blogs in under five minutes.",
+      icon: FiCheckCircle,
     },
     {
-      title: "Knowledge Base",
-      text: "Create and organize your team's documentation in a searchable, structured knowledge base.",
-      icon: FiBook,
-    },
-    {
-      title: "Process Templates",
-      text: "Standardize workflows with customizable process templates that ensure consistency across your organization.",
+      title: "Dynamic Expertise Slider",
+      text: "Offer on-demand Beginner, Intermediate, and Expert variants of each blog tailored to reader's skill level.",
       icon: FiLayers,
     },
     {
-      title: "Progress Tracking",
-      text: "Monitor team progress with visual dashboards showing completion rates and engagement metrics.",
-      icon: FiCheckCircle,
+      title: "Custom Guide Builder",
+      text: "Assemble topic-specific blogs into streamlined, use-case–tailored playbooks for your team.",
+      icon: FiBook,
+    },
+    {
+      title: "Community & Curation",
+      text: "Support Official (admin-curated) and Community sections with ratings, comments, and leaderboards.",
+      icon: FiUsers,
     },
   ];
 
@@ -52,42 +52,54 @@ const FeaturesSection = () => {
             maxW="2xl"
             color={useColorModeValue("gray.600", "gray.400")}
           >
-            Everything you need to streamline onboarding and knowledge sharing
-            in one powerful platform.
+            Powerful AI-driven features that transform how teams create, share,
+            and consume technical knowledge.
           </Text>
         </VStack>
 
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={10}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
           {features.map((feature, index) => (
-            <VStack
+            <Box
               key={index}
-              p={6}
               bg={cardBg}
-              borderWidth="1px"
-              borderColor={borderColor}
+              p={8}
               borderRadius="lg"
+              border="1px"
+              borderColor={borderColor}
               shadow="md"
-              spacing={4}
-              align="start"
               transition="transform 0.3s ease, box-shadow 0.3s ease"
               _hover={{
                 transform: "translateY(-5px)",
                 boxShadow: "lg",
               }}
             >
-              <Box
-                p={2}
-                borderRadius="md"
-                bg={useColorModeValue("blue.50", "blue.900")}
-                color={iconColor}
-              >
-                <Icon as={feature.icon} w={8} h={8} />
-              </Box>
-              <Heading size="md">{feature.title}</Heading>
-              <Text color={useColorModeValue("gray.600", "gray.400")}>
-                {feature.text}
-              </Text>
-            </VStack>
+              <VStack spacing={6} align="start" height="100%">
+                <Box
+                  p={3}
+                  borderRadius="md"
+                  bg={useColorModeValue("blue.50", "blue.900")}
+                  color={iconColor}
+                >
+                  <Icon as={feature.icon} w={8} h={8} />
+                </Box>
+                <Box>
+                  <Heading
+                    size="lg"
+                    mb={3}
+                    color={useColorModeValue("gray.800", "white")}
+                  >
+                    {feature.title}
+                  </Heading>
+                  <Text
+                    fontSize="lg"
+                    color={useColorModeValue("gray.600", "gray.400")}
+                    lineHeight="1.6"
+                  >
+                    {feature.text}
+                  </Text>
+                </Box>
+              </VStack>
+            </Box>
           ))}
         </SimpleGrid>
       </Container>
