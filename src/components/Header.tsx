@@ -17,8 +17,12 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
 } from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
+import NavBar from "./NavBar";
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -34,6 +38,9 @@ const Header = () => {
     { name: "Leaderboards", href: "/leaderboards" },
     { name: "About", href: "/about" },
   ];
+
+  const searchBg = useColorModeValue("gray.50", "gray.700");
+  const searchBorder = useColorModeValue("gray.200", "gray.600");
 
   return (
     <Box
@@ -60,37 +67,42 @@ const Header = () => {
           </Heading>
 
           {/* Desktop Navigation */}
-          <HStack spacing={8} display={{ base: "none", md: "flex" }}>
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                color={textColor}
-                fontWeight="medium"
-                _hover={{
-                  color: hoverColor,
-                  textDecoration: "none",
-                }}
-                transition="color 0.2s ease"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </HStack>
+          <NavBar navItems={navItems} />
 
-          {/* Desktop CTA Button */}
-          <Button
-            colorScheme="blue"
-            size="md"
-            display={{ base: "none", md: "inline-flex" }}
-            _hover={{
-              transform: "translateY(-1px)",
-              boxShadow: "md",
-            }}
-            transition="all 0.2s ease"
-          >
-            Sign In
-          </Button>
+          {/* Desktop Search and CTA */}
+          <HStack spacing={4} display={{ base: "none", md: "flex" }}>
+            <InputGroup size="md" maxW="250px">
+              <InputLeftElement pointerEvents="none">
+                <SearchIcon color="gray.400" />
+              </InputLeftElement>
+              <Input
+                placeholder="Search..."
+                bg={searchBg}
+                border="1px"
+                borderColor={searchBorder}
+                _hover={{
+                  borderColor: useColorModeValue("gray.300", "gray.500"),
+                }}
+                _focus={{
+                  borderColor: useColorModeValue("blue.500", "blue.300"),
+                  boxShadow:
+                    "0 0 0 1px " + useColorModeValue("blue.500", "blue.300"),
+                }}
+                fontSize="sm"
+              />
+            </InputGroup>
+            <Button
+              colorScheme="blue"
+              size="md"
+              _hover={{
+                transform: "translateY(-1px)",
+                boxShadow: "md",
+              }}
+              transition="all 0.2s ease"
+            >
+              Sign In
+            </Button>
+          </HStack>
 
           {/* Mobile Menu Button */}
           <IconButton
@@ -119,6 +131,29 @@ const Header = () => {
           </DrawerHeader>
           <DrawerBody>
             <VStack spacing={4} align="stretch" mt={4}>
+              {/* Mobile Search */}
+              <InputGroup size="md">
+                <InputLeftElement pointerEvents="none">
+                  <SearchIcon color="gray.400" />
+                </InputLeftElement>
+                <Input
+                  placeholder="Search..."
+                  bg={searchBg}
+                  border="1px"
+                  borderColor={searchBorder}
+                  _hover={{
+                    borderColor: useColorModeValue("gray.300", "gray.500"),
+                  }}
+                  _focus={{
+                    borderColor: useColorModeValue("blue.500", "blue.300"),
+                    boxShadow:
+                      "0 0 0 1px " + useColorModeValue("blue.500", "blue.300"),
+                  }}
+                  fontSize="sm"
+                />
+              </InputGroup>
+
+              {/* Mobile Navigation Links */}
               {navItems.map((item) => (
                 <Link
                   key={item.name}
