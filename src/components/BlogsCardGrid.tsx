@@ -25,10 +25,16 @@ interface BlogsCardGridProps {
 }
 
 const BlogsCardGrid = ({ docType }: BlogsCardGridProps) => {
-  const { blogs } = useBlogs();
+  const { blogs, loading } = useBlogs();
+
+  // Debug logging
+  console.log("BlogsCardGrid - blogs:", blogs);
+  console.log("BlogsCardGrid - loading:", loading);
+  console.log("BlogsCardGrid - docType:", docType);
 
   // Filter blogs based on docType
   const filteredBlogs = blogs.filter((blog) => blog.docType === docType);
+  console.log("BlogsCardGrid - filteredBlogs:", filteredBlogs);
 
   const isOfficial = docType === "official";
 
@@ -43,6 +49,24 @@ const BlogsCardGrid = ({ docType }: BlogsCardGridProps) => {
   );
   const textColor = useColorModeValue("gray.600", "gray.400");
   const headingColor = useColorModeValue("gray.800", "white");
+
+  // Show loading state
+  if (loading) {
+    return (
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8}>
+        <Text>Loading blogs...</Text>
+      </SimpleGrid>
+    );
+  }
+
+  // Show empty state
+  if (filteredBlogs.length === 0) {
+    return (
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8}>
+        <Text>No blogs found for {docType} type.</Text>
+      </SimpleGrid>
+    );
+  }
 
   return (
     <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8}>
