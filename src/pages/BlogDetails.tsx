@@ -30,10 +30,18 @@ const BlogDetails = () => {
   const { getBlogById, loading, updateBlogRating } = useBlogs();
   const blog = id ? getBlogById(id) : undefined;
 
-  const bgColor = useColorModeValue("white", "gray.900");
+  const isOfficial = blog?.docType === "official";
+
+  const bgColor = useColorModeValue(
+    isOfficial ? "gray.50" : "white",
+    isOfficial ? "gray.800" : "gray.900",
+  );
   const textColor = useColorModeValue("gray.600", "gray.400");
   const headingColor = useColorModeValue("gray.800", "white");
-  const borderColor = useColorModeValue("gray.200", "gray.700");
+  const borderColor = useColorModeValue(
+    isOfficial ? "gray.300" : "gray.200",
+    isOfficial ? "gray.600" : "gray.700",
+  );
 
   if (loading) {
     return (
@@ -173,11 +181,23 @@ const BlogDetails = () => {
                   </Badge>
                 ))}
               </HStack>
-              <RatingBadge
-                rating={blog.avgRating}
-                totalRatings={blog.totalRatings}
-                size="md"
-              />
+              {blog.docType === "community" ? (
+                <RatingBadge
+                  rating={blog.avgRating}
+                  totalRatings={blog.totalRatings}
+                  size="md"
+                />
+              ) : (
+                <Badge
+                  colorScheme="orange"
+                  variant="solid"
+                  fontSize="md"
+                  px={3}
+                  py={1}
+                >
+                  Official Documentation
+                </Badge>
+              )}
             </HStack>
 
             <Heading
@@ -201,25 +221,48 @@ const BlogDetails = () => {
             </Text>
 
             <HStack justify="space-between" align="center" mb={8}>
-              <HStack spacing={4}>
-                <Avatar
-                  src={blog.author.avatar}
-                  name={blog.author.name}
-                  size="md"
-                />
-                <Box>
-                  <Text fontWeight="medium" color={headingColor}>
-                    {blog.author.name}
+              {blog.docType === "community" ? (
+                <HStack spacing={4}>
+                  <Avatar
+                    src={blog.author.avatar}
+                    name={blog.author.name}
+                    size="md"
+                  />
+                  <Box>
+                    <Text fontWeight="medium" color={headingColor}>
+                      {blog.author.name}
+                    </Text>
+                    <Text fontSize="sm" color={textColor}>
+                      {new Date(blog.publishedAt).toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </Text>
+                  </Box>
+                </HStack>
+              ) : (
+                <VStack spacing={2} align="start">
+                  <Text
+                    fontWeight="bold"
+                    color={useColorModeValue("orange.600", "orange.300")}
+                    fontSize="lg"
+                  >
+                    {blog.teamInfo?.teamName}
                   </Text>
                   <Text fontSize="sm" color={textColor}>
+                    Contact: {blog.teamInfo?.email}
+                  </Text>
+                  <Text fontSize="sm" color={textColor}>
+                    Published:{" "}
                     {new Date(blog.publishedAt).toLocaleDateString("en-US", {
                       month: "long",
                       day: "numeric",
                       year: "numeric",
                     })}
                   </Text>
-                </Box>
-              </HStack>
+                </VStack>
+              )}
 
               <Text fontSize="sm" color={textColor}>
                 {blog.readTime}
@@ -246,16 +289,19 @@ const BlogDetails = () => {
 
           <Divider />
 
-          {/* Rating Section */}
-          <Box display="flex" justifyContent="center" py={8}>
-            <BlogRater
-              blogId={blog.id}
-              onRate={updateBlogRating}
-              currentRating={blog.avgRating}
-            />
-          </Box>
-
-          <Divider />
+          {/* Rating Section - Only for Community blogs */}
+          {blog.docType === "community" && (
+            <>
+              <Box display="flex" justifyContent="center" py={8}>
+                <BlogRater
+                  blogId={blog.id}
+                  onRate={updateBlogRating}
+                  currentRating={blog.avgRating}
+                />
+              </Box>
+              <Divider />
+            </>
+          )}
 
           {/* Back to Blogs */}
           <Box textAlign="center" py={8}>

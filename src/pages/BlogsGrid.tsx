@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Container,
@@ -16,6 +16,10 @@ import {
   Center,
   useColorModeValue,
   Link as ChakraLink,
+  Switch,
+  FormControl,
+  FormLabel,
+  VStack,
 } from "@chakra-ui/react";
 import RatingBadge from "@/components/RatingBadge";
 import { Link as RouterLink } from "react-router-dom";
@@ -25,14 +29,32 @@ import Footer from "@/components/Footer";
 
 const BlogsGrid = () => {
   const { blogs, loading } = useBlogs();
-  const cardBg = useColorModeValue("white", "gray.800");
-  const borderColor = useColorModeValue("gray.200", "gray.700");
+  const [showOfficial, setShowOfficial] = useState(false);
+
+  // Filter blogs based on toggle
+  const filteredBlogs = blogs.filter((blog) =>
+    showOfficial ? blog.docType === "official" : blog.docType === "community",
+  );
+
+  // Dynamic colors based on official/community mode
+  const bgColor = useColorModeValue(
+    showOfficial ? "gray.50" : "white",
+    showOfficial ? "gray.800" : "gray.900",
+  );
+  const cardBg = useColorModeValue(
+    showOfficial ? "gray.100" : "white",
+    showOfficial ? "gray.700" : "gray.800",
+  );
+  const borderColor = useColorModeValue(
+    showOfficial ? "gray.300" : "gray.200",
+    showOfficial ? "gray.600" : "gray.700",
+  );
   const textColor = useColorModeValue("gray.600", "gray.400");
   const headingColor = useColorModeValue("gray.800", "white");
 
   if (loading) {
     return (
-      <Box bg={useColorModeValue("white", "gray.900")} minH="100vh">
+      <Box bg={bgColor} minH="100vh">
         <Header />
         <Center py={20} mt={16}>
           <Spinner size="xl" color="blue.500" />
@@ -43,7 +65,7 @@ const BlogsGrid = () => {
   }
 
   return (
-    <Box bg={useColorModeValue("white", "gray.900")} minH="100vh">
+    <Box bg={bgColor} minH="100vh">
       <Header />
 
       <Container maxW="container.xl" py={20} mt={16}>
@@ -55,21 +77,59 @@ const BlogsGrid = () => {
             mb={4}
             color={headingColor}
           >
-            Our Blog
+            {showOfficial ? "Official Documentation" : "Community Blog"}
           </Heading>
           <Text
             fontSize={{ base: "lg", md: "xl" }}
             color={textColor}
             maxW="2xl"
             mx="auto"
+            mb={8}
           >
-            Insights, tips, and best practices for team onboarding and knowledge
-            sharing
+            {showOfficial
+              ? "Official technical documentation and guides from our expert teams"
+              : "Insights, tips, and best practices for team onboarding and knowledge sharing"}
           </Text>
+
+          {/* Toggle Switch */}
+          <FormControl
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            maxW="300px"
+            mx="auto"
+          >
+            <FormLabel
+              htmlFor="content-toggle"
+              mb="0"
+              mr={4}
+              color={textColor}
+              fontWeight="medium"
+            >
+              Community
+            </FormLabel>
+            <Switch
+              id="content-toggle"
+              size="lg"
+              colorScheme={showOfficial ? "orange" : "blue"}
+              isChecked={showOfficial}
+              onChange={(e) => setShowOfficial(e.target.checked)}
+            />
+            <FormLabel
+              htmlFor="content-toggle"
+              mb="0"
+              ml={4}
+              color={textColor}
+              fontWeight="medium"
+            >
+              Official
+            </FormLabel>
+          </FormControl>
         </Box>
 
+        {/* Blog Cards Grid */}
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8}>
-          {blogs.map((blog) => (
+          {filteredBlogs.map((blog) => (
             <ChakraLink
               as={RouterLink}
               to={`/blog/${blog.id}`}
@@ -114,11 +174,21 @@ const BlogsGrid = () => {
                           </Badge>
                         ))}
                       </HStack>
-                      <RatingBadge
-                        rating={blog.avgRating}
-                        totalRatings={blog.totalRatings}
-                        size="sm"
-                      />
+                      {blog.docType === "community" ? (
+                        <RatingBadge
+                          rating={blog.avgRating}
+                          totalRatings={blog.totalRatings}
+                          size="sm"
+                        />
+                      ) : (
+                        <Badge
+                          colorScheme="orange"
+                          variant="solid"
+                          fontSize="xs"
+                        >
+                          Official
+                        </Badge>
+                      )}
                     </HStack>
 
                     <Heading
@@ -141,32 +211,50 @@ const BlogsGrid = () => {
                     </Text>
 
                     <HStack justify="space-between" align="center" pt={2}>
-                      <HStack spacing={3}>
-                        <Avatar
-                          src={blog.author.avatar}
-                          name={blog.author.name}
-                          size="sm"
-                        />
-                        <Box>
+                      {blog.docType === "community" ? (
+                        <HStack spacing={3}>
+                          <Avatar
+                            src={blog.author.avatar}
+                            name={blog.author.name}
+                            size="sm"
+                          />
+                          <Box>
+                            <Text
+                              fontSize="sm"
+                              fontWeight="medium"
+                              color={headingColor}
+                            >
+                              {blog.author.name}
+                            </Text>
+                            <Text fontSize="xs" color={textColor}>
+                              {new Date(blog.publishedAt).toLocaleDateString(
+                                "en-US",
+                                {
+                                  month: "short",
+                                  day: "numeric",
+                                  year: "numeric",
+                                },
+                              )}
+                            </Text>
+                          </Box>
+                        </HStack>
+                      ) : (
+                        <VStack spacing={1} align="start">
                           <Text
                             fontSize="sm"
-                            fontWeight="medium"
-                            color={headingColor}
+                            fontWeight="bold"
+                            color={useColorModeValue(
+                              "orange.600",
+                              "orange.300",
+                            )}
                           >
-                            {blog.author.name}
+                            {blog.teamInfo?.teamName}
                           </Text>
                           <Text fontSize="xs" color={textColor}>
-                            {new Date(blog.publishedAt).toLocaleDateString(
-                              "en-US",
-                              {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric",
-                              },
-                            )}
+                            {blog.teamInfo?.email}
                           </Text>
-                        </Box>
-                      </HStack>
+                        </VStack>
+                      )}
 
                       <Text fontSize="xs" color={textColor}>
                         {blog.readTime}

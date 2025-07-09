@@ -13,6 +13,11 @@ export interface Blog {
   coverImage: string;
   avgRating: number;
   totalRatings: number;
+  docType: "official" | "community";
+  teamInfo?: {
+    teamName: string;
+    email: string;
+  };
 }
 
 export const blogs: Blog[] = [
@@ -34,6 +39,7 @@ export const blogs: Blog[] = [
       "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80",
     avgRating: 4.5,
     totalRatings: 127,
+    docType: "community",
   },
   {
     id: "2",
@@ -53,6 +59,7 @@ export const blogs: Blog[] = [
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
     avgRating: 4.2,
     totalRatings: 89,
+    docType: "community",
   },
   {
     id: "3",
@@ -72,6 +79,7 @@ export const blogs: Blog[] = [
       "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80",
     avgRating: 4.8,
     totalRatings: 156,
+    docType: "community",
   },
   {
     id: "4",
@@ -91,6 +99,11 @@ export const blogs: Blog[] = [
       "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80",
     avgRating: 4.6,
     totalRatings: 203,
+    docType: "official",
+    teamInfo: {
+      teamName: "AI/ML Engineering Team",
+      email: "ml-team@cleverdocs.com",
+    },
   },
   {
     id: "5",
@@ -110,6 +123,11 @@ export const blogs: Blog[] = [
       "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=800&q=80",
     avgRating: 4.3,
     totalRatings: 94,
+    docType: "official",
+    teamInfo: {
+      teamName: "DevOps Infrastructure Team",
+      email: "devops@cleverdocs.com",
+    },
   },
   {
     id: "6",
@@ -129,5 +147,10 @@ export const blogs: Blog[] = [
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
     avgRating: 4.7,
     totalRatings: 178,
+    docType: "official",
+    teamInfo: {
+      teamName: "Platform Monitoring Team",
+      email: "monitoring@cleverdocs.com",
+    },
   },
 ];
