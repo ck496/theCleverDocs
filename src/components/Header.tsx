@@ -24,6 +24,7 @@ import {
 } from "@chakra-ui/react";
 
 import { HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
+import { Link as RouterLink } from "react-router-dom";
 import NavBar from "./NavBar";
 
 const logoPath = "/logos/mainLogo.webp";
@@ -107,6 +108,8 @@ const Header = () => {
               />
             </InputGroup>
             <Button
+              as={RouterLink}
+              to="/login"
               colorScheme="blue"
               size="md"
               _hover={{
@@ -199,7 +202,14 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              <Button colorScheme="blue" size="md" mt={4} onClick={onClose}>
+              <Button
+                as={RouterLink}
+                to="/login"
+                colorScheme="blue"
+                size="md"
+                mt={4}
+                onClick={onClose}
+              >
                 sign in
               </Button>
             </VStack>

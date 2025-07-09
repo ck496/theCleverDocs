@@ -6,6 +6,7 @@ import BlogDetails from "./pages/BlogDetails";
 import UploadNotes from "./pages/UploadNotes";
 import About from "./pages/About";
 import LeaderboardPage from "./pages/LeaderboardPage";
+import LoginPage from "./pages/LoginPage";
 import routes from "tempo-routes";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/upload" element={<UploadNotes />} />
           <Route path="/about" element={<About />} />
           <Route path="/leaderboards" element={<LeaderboardPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
         {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
       </>
