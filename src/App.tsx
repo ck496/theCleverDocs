@@ -5,6 +5,7 @@ import BlogsGridPage from "./pages/BlogsGridPage";
 import BlogDetails from "./pages/BlogDetails";
 import UploadNotes from "./pages/UploadNotes";
 import About from "./pages/About";
+import LeaderboardPage from "./pages/LeaderboardPage";
 import routes from "tempo-routes";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/blog/:id" element={<BlogDetails />} />
           <Route path="/upload" element={<UploadNotes />} />
           <Route path="/about" element={<About />} />
+          <Route path="/leaderboards" element={<LeaderboardPage />} />
         </Routes>
         {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
       </>
