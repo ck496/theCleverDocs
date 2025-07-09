@@ -66,7 +66,7 @@ const FAQ = () => {
         Frequently Asked Questions
       </Heading>
 
-      <Accordion allowToggle>
+      <Accordion allowToggle mx={15}>
         {faqs.map((faq, index) => (
           <AccordionItem
             key={index}
@@ -80,16 +80,17 @@ const FAQ = () => {
               p={6}
               _hover={{
                 bg: useColorModeValue("gray.50", "gray.700"),
+                borderRadius: "lg",
               }}
             >
               <Box flex="1" textAlign="left">
-                <Heading size="md" color={headingColor} fontWeight="semibold">
+                <Heading size="xm" color={headingColor} fontWeight="semibold">
                   {faq.question}
                 </Heading>
               </Box>
               <AccordionIcon color={headingColor} />
             </AccordionButton>
-            <AccordionPanel p={6} pt={0}>
+            <AccordionPanel p={4} pt={0}>
               <Box color={textColor} fontSize="md" lineHeight="1.6">
                 {faq.answer}
               </Box>
