@@ -20,7 +20,10 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Image,
 } from "@chakra-ui/react";
+
+import logo from "../../public/logos/purpleLogoWithName.webp";
 import { HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
 import NavBar from "./NavBar";
 
@@ -57,14 +60,24 @@ const Header = () => {
       <Container maxW="container.xl">
         <Flex h={16} alignItems="center" justifyContent="space-between">
           {/* Logo */}
-          <Heading
-            as="h1"
-            size="lg"
-            color={useColorModeValue("blue.600", "blue.300")}
-            fontWeight="bold"
-          >
-            CleverDocs
-          </Heading>
+          <HStack spacing={3} align="center">
+            <Image
+              src={logo}
+              alt="CleverDocs Logo"
+              height="40px"
+              width="auto"
+              objectFit="contain"
+              loading="eager"
+            />
+            <Heading
+              as="h1"
+              size="lg"
+              color={useColorModeValue("blue.600", "blue.300")}
+              fontWeight="bold"
+            >
+              CleverDocs
+            </Heading>
+          </HStack>
 
           {/* Desktop Navigation */}
           <NavBar navItems={navItems} />
@@ -122,12 +135,22 @@ const Header = () => {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader borderBottomWidth="1px">
-            <Heading
-              size="md"
-              color={useColorModeValue("blue.600", "blue.300")}
-            >
-              CleverDocs
-            </Heading>
+            <HStack spacing={2} align="center">
+              <Image
+                src={logo}
+                alt="CleverDocs Logo"
+                height="32px"
+                width="auto"
+                objectFit="contain"
+                loading="eager"
+              />
+              <Heading
+                size="md"
+                color={useColorModeValue("blue.600", "blue.300")}
+              >
+                CleverDocs
+              </Heading>
+            </HStack>
           </DrawerHeader>
           <DrawerBody>
             <VStack spacing={4} align="stretch" mt={4}>
