@@ -23,9 +23,10 @@ import {
   Image,
 } from "@chakra-ui/react";
 
-import logo from "../../public/logos/purpleLogoWithName.webp";
 import { HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
 import NavBar from "./NavBar";
+
+const logoPath = "/logos/mainLogo.webp";
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -60,22 +61,23 @@ const Header = () => {
       <Container maxW="container.xl">
         <Flex h={16} alignItems="center" justifyContent="space-between">
           {/* Logo */}
-          <HStack spacing={3} align="center">
+          <HStack spacing={0} align="center">
             <Image
-              src={logo}
+              src={logoPath}
               alt="CleverDocs Logo"
-              height="40px"
+              height="60px"
               width="auto"
               objectFit="contain"
-              loading="eager"
+              mr={0}
             />
             <Heading
               as="h1"
               size="lg"
               color={useColorModeValue("blue.600", "blue.300")}
               fontWeight="bold"
+              ml={0}
             >
-              CleverDocs
+              cleverDocs
             </Heading>
           </HStack>
 
@@ -113,7 +115,7 @@ const Header = () => {
               }}
               transition="all 0.2s ease"
             >
-              Sign In
+              sign in
             </Button>
           </HStack>
 
@@ -137,7 +139,7 @@ const Header = () => {
           <DrawerHeader borderBottomWidth="1px">
             <HStack spacing={2} align="center">
               <Image
-                src={logo}
+                src={logoPath}
                 alt="CleverDocs Logo"
                 height="32px"
                 width="auto"
@@ -198,7 +200,7 @@ const Header = () => {
                 </Link>
               ))}
               <Button colorScheme="blue" size="md" mt={4} onClick={onClose}>
-                Sign In
+                sign in
               </Button>
             </VStack>
           </DrawerBody>
