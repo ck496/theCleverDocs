@@ -17,6 +17,7 @@ import {
   useColorModeValue,
   Link as ChakraLink,
 } from "@chakra-ui/react";
+import RatingBadge from "@/components/RatingBadge";
 import { Link as RouterLink } from "react-router-dom";
 import { useBlogs } from "@/hooks/useBlogs";
 import Header from "@/components/Header";
@@ -100,17 +101,24 @@ const BlogsGrid = () => {
 
                 <CardBody p={6}>
                   <Stack spacing={4} height="100%">
-                    <HStack spacing={2} flexWrap="wrap">
-                      {blog.tags.slice(0, 2).map((tag) => (
-                        <Badge
-                          key={tag}
-                          colorScheme="blue"
-                          variant="subtle"
-                          fontSize="xs"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
+                    <HStack justify="space-between" align="center">
+                      <HStack spacing={2} flexWrap="wrap">
+                        {blog.tags.slice(0, 2).map((tag) => (
+                          <Badge
+                            key={tag}
+                            colorScheme="blue"
+                            variant="subtle"
+                            fontSize="xs"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </HStack>
+                      <RatingBadge
+                        rating={blog.avgRating}
+                        totalRatings={blog.totalRatings}
+                        size="sm"
+                      />
                     </HStack>
 
                     <Heading

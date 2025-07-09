@@ -55,7 +55,7 @@ const HeroSection = () => {
               }}
               transition="all 0.3s ease"
             >
-              Get Started Free
+              Get Started
             </Button>
             <Button
               size="lg"

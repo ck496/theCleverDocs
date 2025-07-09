@@ -17,6 +17,8 @@ import {
   Alert,
   AlertIcon,
 } from "@chakra-ui/react";
+import RatingBadge from "@/components/RatingBadge";
+import BlogRater from "@/components/BlogRater";
 import { useParams, Link as RouterLink } from "react-router-dom";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useBlogs } from "@/hooks/useBlogs";
@@ -25,7 +27,7 @@ import Footer from "@/components/Footer";
 
 const BlogDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const { getBlogById, loading } = useBlogs();
+  const { getBlogById, loading, updateBlogRating } = useBlogs();
   const blog = id ? getBlogById(id) : undefined;
 
   const bgColor = useColorModeValue("white", "gray.900");
@@ -153,17 +155,29 @@ const BlogDetails = () => {
         <VStack spacing={8} align="stretch">
           {/* Header Section */}
           <Box>
-            <HStack spacing={2} mb={4} flexWrap="wrap">
-              {blog.tags.map((tag) => (
-                <Badge
-                  key={tag}
-                  colorScheme="blue"
-                  variant="subtle"
-                  fontSize="sm"
-                >
-                  {tag}
-                </Badge>
-              ))}
+            <HStack
+              justify="space-between"
+              align="center"
+              mb={4}
+              flexWrap="wrap"
+            >
+              <HStack spacing={2} flexWrap="wrap">
+                {blog.tags.map((tag) => (
+                  <Badge
+                    key={tag}
+                    colorScheme="blue"
+                    variant="subtle"
+                    fontSize="sm"
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </HStack>
+              <RatingBadge
+                rating={blog.avgRating}
+                totalRatings={blog.totalRatings}
+                size="md"
+              />
             </HStack>
 
             <Heading
@@ -229,6 +243,17 @@ const BlogDetails = () => {
 
           {/* Content */}
           <Box>{renderContent(blog.content)}</Box>
+
+          <Divider />
+
+          {/* Rating Section */}
+          <Box display="flex" justifyContent="center" py={8}>
+            <BlogRater
+              blogId={blog.id}
+              onRate={updateBlogRating}
+              currentRating={blog.avgRating}
+            />
+          </Box>
 
           <Divider />
 

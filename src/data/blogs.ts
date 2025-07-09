@@ -11,6 +11,8 @@ export interface Blog {
   readTime: string;
   tags: string[];
   coverImage: string;
+  avgRating: number;
+  totalRatings: number;
 }
 
 export const blogs: Blog[] = [
@@ -30,6 +32,8 @@ export const blogs: Blog[] = [
     tags: ["Kubernetes", "DevOps", "Deployment", "CI/CD"],
     coverImage:
       "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80",
+    avgRating: 4.5,
+    totalRatings: 127,
   },
   {
     id: "2",
@@ -47,6 +51,8 @@ export const blogs: Blog[] = [
     tags: ["AWS", "Cloud", "Cost Optimization", "FinOps"],
     coverImage:
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
+    avgRating: 4.2,
+    totalRatings: 89,
   },
   {
     id: "3",
@@ -64,6 +70,8 @@ export const blogs: Blog[] = [
     tags: ["Microservices", "Resilience", "Architecture", "Node.js"],
     coverImage:
       "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80",
+    avgRating: 4.8,
+    totalRatings: 156,
   },
   {
     id: "4",
@@ -81,6 +89,8 @@ export const blogs: Blog[] = [
     tags: ["Machine Learning", "MLOps", "AI", "Python", "Deployment"],
     coverImage:
       "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80",
+    avgRating: 4.6,
+    totalRatings: 203,
   },
   {
     id: "5",
@@ -98,6 +108,8 @@ export const blogs: Blog[] = [
     tags: ["Terraform", "Infrastructure as Code", "DevOps", "AWS"],
     coverImage:
       "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=800&q=80",
+    avgRating: 4.3,
+    totalRatings: 94,
   },
   {
     id: "6",
@@ -115,5 +127,7 @@ export const blogs: Blog[] = [
     tags: ["Monitoring", "Observability", "Prometheus", "Grafana", "DevOps"],
     coverImage:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    avgRating: 4.7,
+    totalRatings: 178,
   },
 ];
