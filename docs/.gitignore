@@ -1,0 +1,15 @@
+# Environment variables
+.env
+.env.*
+
+# VS Code and IDE settings
+.vscode/
+.idea/
+
+# MacOS
+.DS_Store
+
+# Local build or temp files
+*.log
+*.tmp
+*.out 

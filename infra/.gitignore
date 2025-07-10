@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Node modules
+node_modules/
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+crash.log
+*.tfvars
+*.tfvars.json
+
+# CDK
+cdk.out/
+
+# AWS credentials and secrets
+.aws/
+*.pem
+*.key
+*.crt
+*.env
+.env.*
+
+# VS Code and IDE settings
+.vscode/
+.idea/
+
+# MacOS
+.DS_Store
+
+# Logs
+*.log
+
+# Test output
+*.out
+*.tmp 

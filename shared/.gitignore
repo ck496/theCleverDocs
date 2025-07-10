@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# TypeScript
+*.js
+*.js.map
+*.d.ts
+
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+.env.*
+
+# VS Code and IDE settings
+.vscode/
+.idea/
+
+# MacOS
+.DS_Store
+
+# Logs
+*.log 
