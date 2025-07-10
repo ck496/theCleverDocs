@@ -1,0 +1,25 @@
+# Environment variables
+.env
+.env.*
+
+# VS Code and IDE settings
+.vscode/
+.idea/
+
+# MacOS
+.DS_Store
+
+# Logs
+*.log
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Node modules (if any accidentally placed in root)
+node_modules/
+
+# Local build or temp files
+*.tmp
+*.out 
