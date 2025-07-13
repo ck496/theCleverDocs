@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import apiClient from "@/api/client";
 import {
   blogs as initialBlogs,
   Blog,
@@ -12,25 +13,14 @@ export const useBlogs = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate API loading - easily replaceable with actual API call
     const loadBlogs = async () => {
       try {
-        // TODO: Replace with actual API call when backend is ready
-        // const response = await fetch('/api/blogs');
-        // const blogsData = await response.json();
-
-        // For now, use shared data source (single source of truth)
-        const savedBlogs = localStorage.getItem("cleverdocs-blogs");
-        const blogsData = savedBlogs ? JSON.parse(savedBlogs) : initialBlogs;
-
-        // Simulate network delay for realistic UX
-        await new Promise((resolve) => setTimeout(resolve, 500));
-
-        setAllBlogs(blogsData);
+        const response = await apiClient.get('/blogs');
+        const data = response.data;
+        setAllBlogs(data.data); // API returns { status: "success", data: Blog[], total: number, filteredTotal: number }
       } catch (error) {
-        console.error("Error loading blogs:", error);
-        // Fallback to initial blogs
-        setAllBlogs(initialBlogs);
+        console.error('Error loading blogs:', error);
+        setAllBlogs(initialBlogs); // Fallback to static data
       } finally {
         setLoading(false);
       }
@@ -67,8 +57,10 @@ export const useBlogs = () => {
   };
 
   const updateBlogRating = (blogId: string, newRating: number) => {
+    // TODO: Implement API call to update blog rating on backend
+    // For now, update local state only
     setAllBlogs((prevBlogs) => {
-      const updatedBlogs = prevBlogs.map((blog) => {
+      return prevBlogs.map((blog) => {
         if (blog.id === blogId) {
           const totalScore = blog.avgRating * blog.totalRatings + newRating;
           const newTotalRatings = blog.totalRatings + 1;
@@ -82,10 +74,6 @@ export const useBlogs = () => {
         }
         return blog;
       });
-
-      // Save to localStorage (remove when API is ready)
-      localStorage.setItem("cleverdocs-blogs", JSON.stringify(updatedBlogs));
-      return updatedBlogs;
     });
   };
 
@@ -100,29 +88,3 @@ export const useBlogs = () => {
   };
 };
 
-// Future API-ready version (for reference)
-/*
-export const useBlogs = () => {
-  const [allBlogs, setAllBlogs] = useState<Blog[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const loadBlogs = async () => {
-      try {
-        const response = await fetch('/api/blogs');
-        const data = await response.json();
-        setAllBlogs(data.data); // Assuming API returns { status: "success", data: Blog[] }
-      } catch (error) {
-        console.error('Error loading blogs:', error);
-        setAllBlogs(initialBlogs); // Fallback to static data
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadBlogs();
-  }, []);
-
-  // Rest stays the same...
-};
-*/
