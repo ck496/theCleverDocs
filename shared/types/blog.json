@@ -1,135 +1,135 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "CleverDocs Blog Schema",
-  "description": "Standard blog schema for CleverDocs knowledge sharing platform",
+  "description": "Standard blog schema matching the exact frontend interface for CleverDocs",
   "type": "object",
   "required": [
     "id",
     "title",
-    "content",
     "excerpt",
-    "expertiseLevel",
-    "tags",
+    "content",
     "author",
-    "createdAt",
-    "updatedAt",
-    "readTimeMinutes",
-    "isPublic",
-    "status"
+    "publishedAt",
+    "readTime",
+    "tags",
+    "coverImage",
+    "avgRating",
+    "totalRatings",
+    "docType"
   ],
   "properties": {
     "id": {
       "type": "string",
-      "pattern": "^blog_[a-zA-Z0-9]+$",
-      "description": "Unique blog identifier with blog_ prefix"
+      "description": "Unique blog identifier"
     },
     "title": {
       "type": "string",
       "minLength": 1,
       "maxLength": 200,
-      "description": "Blog title for knowledge sharing"
-    },
-    "content": {
-      "type": "string",
-      "minLength": 10,
-      "description": "Full blog content in markdown or text format"
+      "description": "Blog title"
     },
     "excerpt": {
       "type": "string",
       "minLength": 10,
-      "maxLength": 300,
+      "maxLength": 500,
       "description": "Brief summary for blog cards and previews"
     },
-    "expertiseLevel": {
+    "content": {
       "type": "string",
-      "enum": ["beginner", "intermediate", "expert"],
-      "description": "Target expertise level - core CleverDocs feature"
+      "minLength": 10,
+      "description": "Full blog content in markdown format"
+    },
+    "author": {
+      "type": "object",
+      "required": ["name", "avatar"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Author display name"
+        },
+        "avatar": {
+          "type": "string",
+          "format": "uri",
+          "description": "Author avatar image URL"
+        }
+      },
+      "description": "Author information for community blogs"
+    },
+    "publishedAt": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "Publication date in YYYY-MM-DD format"
+    },
+    "readTime": {
+      "type": "string",
+      "pattern": "^\\d+ min read$",
+      "description": "Estimated reading time as string (e.g., '8 min read')"
     },
     "tags": {
       "type": "array",
       "items": {
         "type": "string",
-        "pattern": "^[a-z0-9\\-]+$"
+        "minLength": 1
       },
       "maxItems": 10,
       "description": "Searchable tags for content discovery"
     },
-    "author": {
+    "coverImage": {
+      "type": "string",
+      "format": "uri",
+      "description": "Blog cover image URL"
+    },
+    "avgRating": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 5,
+      "description": "Average user rating (0-5 stars)"
+    },
+    "totalRatings": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total number of ratings received"
+    },
+    "docType": {
+      "type": "string",
+      "enum": ["official", "community"],
+      "description": "Document type - official (team docs) or community (user generated)"
+    },
+    "teamInfo": {
       "type": "object",
-      "required": ["id", "name", "avatar"],
+      "required": ["teamName", "email"],
       "properties": {
-        "id": {
-          "type": "string",
-          "pattern": "^author_[a-zA-Z0-9]+$"
-        },
-        "name": {
+        "teamName": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 100
+          "maxLength": 100,
+          "description": "Team name for official documentation"
         },
-        "avatar": {
+        "email": {
           "type": "string",
-          "format": "uri-reference"
+          "format": "email",
+          "description": "Team contact email"
         }
+      },
+      "description": "Team information for official documentation (optional, only for docType: 'official')"
+    }
+  },
+  "additionalProperties": false,
+  "if": {
+    "properties": {
+      "docType": {
+        "const": "official"
       }
-    },
-    "createdAt": {
-      "type": "string",
-      "format": "date-time",
-      "description": "ISO 8601 timestamp"
-    },
-    "updatedAt": {
-      "type": "string",
-      "format": "date-time",
-      "description": "ISO 8601 timestamp"
-    },
-    "readTimeMinutes": {
-      "type": "integer",
-      "minimum": 1,
-      "maximum": 120,
-      "description": "Estimated reading time in minutes"
-    },
-    "isPublic": {
-      "type": "boolean",
-      "description": "Whether blog is publicly accessible"
-    },
-    "status": {
-      "type": "string",
-      "enum": ["draft", "published", "archived"],
-      "description": "Blog publication status"
-    },
-    "metadata": {
-      "type": "object",
-      "description": "Additional blog metrics and categorization",
-      "properties": {
-        "views": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "likes": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "comments": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "difficulty": {
-          "type": "string",
-          "enum": ["beginner", "intermediate", "expert"]
-        },
-        "category": {
-          "type": "string",
-          "enum": [
-            "frontend",
-            "backend",
-            "infrastructure",
-            "process",
-            "tools",
-            "ai"
-          ]
-        }
-      }
+    }
+  },
+  "then": {
+    "required": ["teamInfo"]
+  },
+  "else": {
+    "not": {
+      "required": ["teamInfo"]
     }
   }
 }

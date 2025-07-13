@@ -1,170 +1,112 @@
 [
   {
-    "id": "blog_001",
-    "title": "Getting Started with FastAPI",
-    "content": "FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints. This guide will help you understand the fundamentals and get you building APIs quickly.",
-    "excerpt": "Learn the fundamentals of FastAPI and start building high-performance APIs with Python.",
-    "expertiseLevel": "beginner",
-    "tags": ["fastapi", "python", "api", "beginner", "web-development"],
+    "id": "1",
+    "title": "Kubernetes Deployment Strategies: Blue-Green vs Rolling Updates",
+    "excerpt": "A comprehensive guide to Kubernetes deployment strategies, comparing blue-green deployments with rolling updates for zero-downtime releases.",
+    "content": "# Kubernetes Deployment Strategies: Blue-Green vs Rolling Updates\n\nChoosing the right deployment strategy is crucial for maintaining application availability and minimizing risk during releases.\n\n## Rolling Updates\n\nRolling updates gradually replace old pods with new ones, maintaining service availability throughout the process.\n\n### Advantages\n\n- Zero downtime deployments\n- Gradual rollout reduces blast radius\n- Built-in rollback capabilities\n- Resource efficient\n\n### Configuration Example\n\n```yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: my-app\nspec:\n  replicas: 3\n  strategy:\n    type: RollingUpdate\n    rollingUpdate:\n      maxUnavailable: 1\n      maxSurge: 1\n```\n\n## Blue-Green Deployments\n\nBlue-green deployments maintain two identical production environments, switching traffic between them during releases.\n\n### When to Use Blue-Green\n\n- Database schema changes\n- Major version upgrades\n- High-risk deployments\n- Need for instant rollback\n\n### Implementation with Kubernetes\n\nUse services and ingress controllers to manage traffic switching between blue and green environments.\n\n## Best Practices\n\n1. **Health Checks**: Implement proper readiness and liveness probes\n2. **Monitoring**: Set up comprehensive monitoring and alerting\n3. **Testing**: Automate testing in staging environments\n4. **Rollback Plans**: Always have a rollback strategy ready",
     "author": {
-      "id": "author_001",
-      "name": "CleverDocs Team",
-      "avatar": "/images/authors/team.jpg"
+      "name": "Sarah Chen",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah"
     },
-    "createdAt": "2024-01-15T10:00:00Z",
-    "updatedAt": "2024-01-15T10:00:00Z",
-    "readTimeMinutes": 8,
-    "isPublic": true,
-    "status": "published",
-    "metadata": {
-      "views": 1250,
-      "likes": 89,
-      "comments": 12,
-      "difficulty": "beginner",
-      "category": "backend"
+    "publishedAt": "2024-01-15",
+    "readTime": "12 min read",
+    "tags": ["Kubernetes", "DevOps", "Deployment", "CI/CD"],
+    "coverImage": "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80",
+    "avgRating": 4.5,
+    "totalRatings": 127,
+    "docType": "community"
+  },
+  {
+    "id": "2",
+    "title": "AWS Cost Optimization: A Developer's Guide to Cloud Economics",
+    "excerpt": "Learn practical strategies to optimize AWS costs without sacrificing performance, including rightsizing, reserved instances, and monitoring techniques.",
+    "content": "# AWS Cost Optimization: A Developer's Guide to Cloud Economics\n\nCloud costs can spiral out of control quickly. This guide provides practical strategies to keep your AWS bill manageable.\n\n## Understanding AWS Pricing\n\nAWS uses a pay-as-you-go model with several pricing dimensions:\n\n- **Compute**: EC2 instances, Lambda functions\n- **Storage**: S3, EBS volumes\n- **Network**: Data transfer, CloudFront\n- **Database**: RDS, DynamoDB\n\n## Cost Optimization Strategies\n\n### 1. Right-sizing Resources\n\nRegularly review and adjust instance sizes based on actual usage patterns.\n\n### 2. Reserved Instances\n\nCommit to 1-3 year terms for predictable workloads to save up to 75%.\n\n### 3. Spot Instances\n\nUse spot instances for fault-tolerant workloads to save up to 90%.\n\n### 4. Auto Scaling\n\nImplement auto scaling to match capacity with demand.\n\n## Monitoring and Alerting\n\nSet up CloudWatch billing alerts and use AWS Cost Explorer for detailed analysis.",
+    "author": {
+      "name": "Mike Rodriguez",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Mike"
+    },
+    "publishedAt": "2024-01-20",
+    "readTime": "8 min read",
+    "tags": ["AWS", "Cost Optimization", "Cloud", "FinOps"],
+    "coverImage": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    "avgRating": 4.2,
+    "totalRatings": 89,
+    "docType": "community"
+  },
+  {
+    "id": "3",
+    "title": "React Performance Optimization: Hooks and Best Practices",
+    "excerpt": "Master React performance with advanced hooks patterns, memoization strategies, and code splitting techniques for lightning-fast applications.",
+    "content": "# React Performance Optimization: Hooks and Best Practices\n\nBuilding performant React applications requires understanding optimization patterns and when to apply them.\n\n## Key Performance Hooks\n\n### useMemo\n\nMemoize expensive calculations:\n\n```javascript\nconst expensiveValue = useMemo(() => {\n  return heavyCalculation(data);\n}, [data]);\n```\n\n### useCallback\n\nMemoize function references:\n\n```javascript\nconst handleClick = useCallback(() => {\n  onItemClick(item.id);\n}, [item.id, onItemClick]);\n```\n\n### React.memo\n\nPrevent unnecessary re-renders:\n\n```javascript\nconst MyComponent = React.memo(({ name, age }) => {\n  return <div>{name} is {age} years old</div>;\n});\n```\n\n## Code Splitting\n\nUse React.lazy for component-level code splitting:\n\n```javascript\nconst LazyComponent = React.lazy(() => import('./LazyComponent'));\n\nfunction App() {\n  return (\n    <Suspense fallback={<div>Loading...</div>}>\n      <LazyComponent />\n    </Suspense>\n  );\n}\n```\n\n## Performance Measuring\n\nUse React DevTools Profiler to identify performance bottlenecks and measure the impact of optimizations.",
+    "author": {
+      "name": "Emma Thompson",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Emma"
+    },
+    "publishedAt": "2024-01-25",
+    "readTime": "15 min read",
+    "tags": ["React", "Performance", "JavaScript", "Frontend"],
+    "coverImage": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80",
+    "avgRating": 4.7,
+    "totalRatings": 203,
+    "docType": "community"
+  },
+  {
+    "id": "4",
+    "title": "Company API Standards and Guidelines",
+    "excerpt": "Official documentation for CleverDocs API design patterns, authentication protocols, and development standards for all engineering teams.",
+    "content": "# Company API Standards and Guidelines\n\nThis document outlines the official API standards for all CleverDocs engineering teams.\n\n## API Design Principles\n\n### 1. RESTful Design\n\nAll APIs must follow REST conventions:\n\n- Use HTTP methods appropriately (GET, POST, PUT, DELETE)\n- Use noun-based resource URLs\n- Return appropriate HTTP status codes\n- Use consistent response formats\n\n### 2. Authentication\n\nAll APIs must implement OAuth 2.0 with JWT tokens:\n\n```javascript\n// Example authorization header\nAuthorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\n```\n\n### 3. Error Handling\n\nStandardized error response format:\n\n```json\n{\n  \"error\": {\n    \"code\": \"INVALID_REQUEST\",\n    \"message\": \"The request parameters are invalid\",\n    \"details\": [\n      {\n        \"field\": \"email\",\n        \"issue\": \"Invalid email format\"\n      }\n    ]\n  }\n}\n```\n\n## Rate Limiting\n\nAll public APIs must implement rate limiting:\n\n- 1000 requests per hour for authenticated users\n- 100 requests per hour for unauthenticated users\n- Include rate limit headers in responses\n\n## Documentation Requirements\n\n- OpenAPI 3.0 specifications required\n- Interactive documentation with examples\n- SDK generation support\n- Changelog maintenance\n\n## Security Requirements\n\n- HTTPS only for all endpoints\n- Input validation and sanitization\n- SQL injection protection\n- XSS prevention measures\n\nFor questions or clarifications, contact the API Architecture team.",
+    "author": {
+      "name": "CleverDocs Engineering",
+      "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=CD"
+    },
+    "publishedAt": "2024-02-01",
+    "readTime": "10 min read",
+    "tags": ["API", "Standards", "Documentation", "Security"],
+    "coverImage": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80",
+    "avgRating": 0,
+    "totalRatings": 0,
+    "docType": "official",
+    "teamInfo": {
+      "teamName": "API Architecture Team",
+      "email": "api-team@cleverdocs.com"
     }
   },
   {
-    "id": "blog_002",
-    "title": "Advanced React Patterns for Knowledge Sharing",
-    "content": "Explore advanced React patterns that enable effective knowledge sharing in engineering teams. Learn about render props, higher-order components, and custom hooks that accelerate onboarding.",
-    "excerpt": "Master advanced React patterns to build more effective knowledge sharing applications.",
-    "expertiseLevel": "intermediate",
-    "tags": [
-      "react",
-      "javascript",
-      "patterns",
-      "frontend",
-      "knowledge-sharing"
-    ],
+    "id": "5",
+    "title": "Database Migration Best Practices",
+    "excerpt": "Learn how to safely execute database migrations in production environments with zero downtime and proper rollback strategies.",
+    "content": "# Database Migration Best Practices\n\nDatabase migrations are critical operations that require careful planning and execution.\n\n## Pre-Migration Checklist\n\n### 1. Backup Strategy\n\n- Create full database backup\n- Test backup restoration process\n- Verify backup integrity\n- Document recovery procedures\n\n### 2. Migration Planning\n\n- Review migration scripts\n- Test in staging environment\n- Plan rollback procedures\n- Schedule maintenance windows\n\n## Migration Patterns\n\n### Additive Changes\n\nSafe operations that don't break existing functionality:\n\n```sql\n-- Adding new columns\nALTER TABLE users ADD COLUMN phone_number VARCHAR(20);\n\n-- Adding new indexes\nCREATE INDEX idx_users_email ON users(email);\n\n-- Adding new tables\nCREATE TABLE user_preferences (\n  id SERIAL PRIMARY KEY,\n  user_id INTEGER REFERENCES users(id),\n  setting_name VARCHAR(100),\n  setting_value TEXT\n);\n```\n\n### Destructive Changes\n\nOperations requiring careful coordination:\n\n```sql\n-- Dropping columns (requires application deployment)\nALTER TABLE users DROP COLUMN old_field;\n\n-- Renaming columns\nALTER TABLE users RENAME COLUMN old_name TO new_name;\n```\n\n## Zero-Downtime Strategies\n\n### 1. Expand-Contract Pattern\n\n1. **Expand**: Add new schema elements\n2. **Migrate**: Update application to use new schema\n3. **Contract**: Remove old schema elements\n\n### 2. Blue-Green Database\n\nMaintain two database environments for instant switching.\n\n## Monitoring and Rollback\n\n- Monitor application metrics during migration\n- Have automated rollback triggers\n- Test rollback procedures regularly\n- Document lessons learned",
     "author": {
-      "id": "author_002",
-      "name": "Sarah Developer",
-      "avatar": "/images/authors/sarah.jpg"
+      "name": "David Kim",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=David"
     },
-    "createdAt": "2024-01-20T14:30:00Z",
-    "updatedAt": "2024-01-22T09:15:00Z",
-    "readTimeMinutes": 12,
-    "isPublic": true,
-    "status": "published",
-    "metadata": {
-      "views": 890,
-      "likes": 67,
-      "comments": 8,
-      "difficulty": "intermediate",
-      "category": "frontend"
-    }
+    "publishedAt": "2024-02-05",
+    "readTime": "18 min read",
+    "tags": ["Database", "Migration", "DevOps", "PostgreSQL"],
+    "coverImage": "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&q=80",
+    "avgRating": 4.3,
+    "totalRatings": 156,
+    "docType": "community"
   },
   {
-    "id": "blog_003",
-    "title": "Building Scalable AWS Infrastructure with Terraform",
-    "content": "Infrastructure as Code (IaC) is essential for modern engineering teams. This comprehensive guide covers Terraform best practices for AWS, including modules, state management, and CI/CD integration.",
-    "excerpt": "Master Infrastructure as Code with Terraform and AWS for scalable, maintainable systems.",
-    "expertiseLevel": "expert",
-    "tags": ["terraform", "aws", "infrastructure", "devops", "iac"],
+    "id": "6",
+    "title": "Security Incident Response Procedures",
+    "excerpt": "Official CleverDocs security incident response protocols, escalation procedures, and post-incident analysis requirements for all teams.",
+    "content": "# Security Incident Response Procedures\n\n**Classification: Internal Use Only**\n\nThis document outlines the official security incident response procedures for CleverDocs.\n\n## Incident Classification\n\n### Severity Levels\n\n**Critical (P0)**: Active security breach, data exposure, or system compromise\n- Response time: Immediate (< 15 minutes)\n- Escalation: CISO, CTO, CEO\n\n**High (P1)**: Security vulnerability with potential for exploitation\n- Response time: < 1 hour\n- Escalation: Security team lead, Engineering manager\n\n**Medium (P2)**: Security concern requiring investigation\n- Response time: < 4 hours\n- Escalation: Security team\n\n**Low (P3)**: Security best practice violation\n- Response time: < 24 hours\n- Escalation: Team lead\n\n## Response Procedures\n\n### Immediate Actions (First 15 minutes)\n\n1. **Containment**: Isolate affected systems\n2. **Assessment**: Determine scope and impact\n3. **Communication**: Notify security team\n4. **Documentation**: Begin incident log\n\n### Investigation Phase\n\n1. **Preserve Evidence**: Create system snapshots\n2. **Root Cause Analysis**: Identify attack vectors\n3. **Impact Assessment**: Determine data/system exposure\n4. **Timeline Reconstruction**: Map incident progression\n\n### Recovery Phase\n\n1. **System Restoration**: Restore from clean backups\n2. **Security Patches**: Apply necessary updates\n3. **Access Review**: Revoke compromised credentials\n4. **Monitoring Enhancement**: Implement additional controls\n\n## Communication Plan\n\n### Internal Communications\n\n- Security team: Immediate notification\n- Engineering leadership: Within 30 minutes\n- Executive team: Within 1 hour for P0/P1\n- All staff: As appropriate based on impact\n\n### External Communications\n\n- Legal counsel: For potential legal implications\n- Customers: For confirmed data exposure\n- Regulators: As required by compliance frameworks\n- Law enforcement: For criminal activity\n\n## Post-Incident Activities\n\n### Documentation Requirements\n\n- Complete incident timeline\n- Root cause analysis report\n- Impact assessment summary\n- Lessons learned document\n\n### Follow-up Actions\n\n- Security control improvements\n- Process refinements\n- Training updates\n- Third-party security assessment\n\n## Contact Information\n\n- **Security Hotline**: +1-555-SEC-HELP\n- **Security Team Lead**: security-lead@cleverdocs.com\n- **CISO**: ciso@cleverdocs.com\n- **Legal**: legal@cleverdocs.com\n\n**Remember**: When in doubt, escalate. Better safe than sorry.\n\nThis document is reviewed quarterly and updated as needed.",
     "author": {
-      "id": "author_003",
-      "name": "Alex DevOps",
-      "avatar": "/images/authors/alex.jpg"
+      "name": "CleverDocs Security Team",
+      "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=SEC"
     },
-    "createdAt": "2024-01-25T16:45:00Z",
-    "updatedAt": "2024-01-25T16:45:00Z",
-    "readTimeMinutes": 18,
-    "isPublic": true,
-    "status": "published",
-    "metadata": {
-      "views": 2100,
-      "likes": 156,
-      "comments": 23,
-      "difficulty": "expert",
-      "category": "infrastructure"
-    }
-  },
-  {
-    "id": "blog_004",
-    "title": "Effective Code Review Practices for Team Growth",
-    "content": "Code reviews are crucial for knowledge transfer and team development. Learn proven strategies to conduct reviews that accelerate learning, improve code quality, and build stronger engineering teams.",
-    "excerpt": "Transform your code review process into a powerful tool for team growth and knowledge sharing.",
-    "expertiseLevel": "intermediate",
-    "tags": [
-      "code-review",
-      "teamwork",
-      "best-practices",
-      "mentoring",
-      "collaboration"
-    ],
-    "author": {
-      "id": "author_004",
-      "name": "Maria Lead",
-      "avatar": "/images/authors/maria.jpg"
-    },
-    "createdAt": "2024-02-01T11:20:00Z",
-    "updatedAt": "2024-02-01T11:20:00Z",
-    "readTimeMinutes": 10,
-    "isPublic": true,
-    "status": "published",
-    "metadata": {
-      "views": 1680,
-      "likes": 124,
-      "comments": 19,
-      "difficulty": "intermediate",
-      "category": "process"
-    }
-  },
-  {
-    "id": "blog_005",
-    "title": "Introduction to Git for New Developers",
-    "content": "Git is the foundation of modern software development. This beginner-friendly guide covers essential Git concepts, commands, and workflows that every new developer needs to master for effective collaboration.",
-    "excerpt": "Master Git fundamentals and start collaborating effectively with your development team.",
-    "expertiseLevel": "beginner",
-    "tags": ["git", "version-control", "beginner", "collaboration", "workflow"],
-    "author": {
-      "id": "author_005",
-      "name": "Tom Mentor",
-      "avatar": "/images/authors/tom.jpg"
-    },
-    "createdAt": "2024-02-05T09:00:00Z",
-    "updatedAt": "2024-02-05T09:00:00Z",
-    "readTimeMinutes": 15,
-    "isPublic": true,
-    "status": "published",
-    "metadata": {
-      "views": 3200,
-      "likes": 234,
-      "comments": 31,
-      "difficulty": "beginner",
-      "category": "tools"
-    }
-  },
-  {
-    "id": "blog_006",
-    "title": "AI-Powered Content Generation for Technical Documentation",
-    "content": "Explore how AI can accelerate the creation of high-quality technical documentation. Learn about prompt engineering, content structuring, and quality assurance for AI-generated docs that truly help teams.",
-    "excerpt": "Leverage AI to create better technical documentation faster, improving team knowledge sharing.",
-    "expertiseLevel": "expert",
-    "tags": [
-      "ai",
-      "documentation",
-      "automation",
-      "content-generation",
-      "productivity"
-    ],
-    "author": {
-      "id": "author_001",
-      "name": "CleverDocs Team",
-      "avatar": "/images/authors/team.jpg"
-    },
-    "createdAt": "2024-02-10T13:15:00Z",
-    "updatedAt": "2024-02-12T10:30:00Z",
-    "readTimeMinutes": 22,
-    "isPublic": true,
-    "status": "published",
-    "metadata": {
-      "views": 1450,
-      "likes": 98,
-      "comments": 15,
-      "difficulty": "expert",
-      "category": "ai"
+    "publishedAt": "2024-02-10",
+    "readTime": "25 min read",
+    "tags": ["Security", "Incident Response", "Procedures", "Compliance"],
+    "coverImage": "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80",
+    "avgRating": 0,
+    "totalRatings": 0,
+    "docType": "official",
+    "teamInfo": {
+      "teamName": "Security Operations",
+      "email": "security@cleverdocs.com"
     }
   }
 ]
