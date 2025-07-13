@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CleverDocs Blog Schema",
+  "description": "Standard blog schema for CleverDocs knowledge sharing platform",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "content",
+    "excerpt",
+    "expertiseLevel",
+    "tags",
+    "author",
+    "createdAt",
+    "updatedAt",
+    "readTimeMinutes",
+    "isPublic",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^blog_[a-zA-Z0-9]+$",
+      "description": "Unique blog identifier with blog_ prefix"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "description": "Blog title for knowledge sharing"
+    },
+    "content": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Full blog content in markdown or text format"
+    },
+    "excerpt": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 300,
+      "description": "Brief summary for blog cards and previews"
+    },
+    "expertiseLevel": {
+      "type": "string",
+      "enum": ["beginner", "intermediate", "expert"],
+      "description": "Target expertise level - core CleverDocs feature"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9\\-]+$"
+      },
+      "maxItems": 10,
+      "description": "Searchable tags for content discovery"
+    },
+    "author": {
+      "type": "object",
+      "required": ["id", "name", "avatar"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^author_[a-zA-Z0-9]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "avatar": {
+          "type": "string",
+          "format": "uri-reference"
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp"
+    },
+    "readTimeMinutes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 120,
+      "description": "Estimated reading time in minutes"
+    },
+    "isPublic": {
+      "type": "boolean",
+      "description": "Whether blog is publicly accessible"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "published", "archived"],
+      "description": "Blog publication status"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional blog metrics and categorization",
+      "properties": {
+        "views": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "likes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "comments": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "difficulty": {
+          "type": "string",
+          "enum": ["beginner", "intermediate", "expert"]
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "frontend",
+            "backend",
+            "infrastructure",
+            "process",
+            "tools",
+            "ai"
+          ]
+        }
+      }
+    }
+  }
+}
