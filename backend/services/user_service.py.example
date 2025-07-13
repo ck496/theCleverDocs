@@ -1,0 +1,43 @@
+# Example: Future user service
+from typing import List, Optional
+from fastapi import HTTPException
+import logging
+
+from models.user import User
+
+logger = logging.getLogger(__name__)
+
+class UserService:
+    """Service class for user-related business logic."""
+    
+    def __init__(self):
+        # In the future, this could connect to a database
+        pass
+    
+    async def get_user_by_id(self, user_id: str) -> Optional[User]:
+        """Get user by ID."""
+        # Implementation would query database
+        pass
+    
+    async def get_all_users(self) -> List[User]:
+        """Get all users."""
+        # Implementation would query database
+        pass
+    
+    async def create_user(self, user_data: dict) -> User:
+        """Create a new user."""
+        # Implementation would save to database
+        pass
+    
+    async def update_user(self, user_id: str, updates: dict) -> User:
+        """Update user."""
+        # Implementation would update database
+        pass
+    
+    async def delete_user(self, user_id: str) -> bool:
+        """Delete user."""
+        # Implementation would delete from database
+        pass
+
+# Global service instance
+user_service = UserService()

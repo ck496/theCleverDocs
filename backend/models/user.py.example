@@ -1,0 +1,22 @@
+# Example: Future user model
+from pydantic import BaseModel, Field
+from typing import Optional, Literal
+from datetime import datetime
+
+class User(BaseModel):
+    id: str
+    name: str = Field(..., min_length=1, max_length=100)
+    email: str = Field(..., regex=r'^[^@]+@[^@]+\.[^@]+$')
+    avatar: Optional[str] = None
+    role: Literal["admin", "user"] = "user"
+    createdAt: datetime
+    isActive: bool = True
+
+class UserResponse(BaseModel):
+    status: str
+    data: User
+
+class UsersResponse(BaseModel):
+    status: str
+    data: list[User]
+    total: int

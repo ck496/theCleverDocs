@@ -1,10 +1,10 @@
 from fastapi import FastAPI, HTTPException, Query
-from pydantic import BaseModel, Field
-from typing import List, Optional, Literal
-import json
-import os
+from typing import Optional
 import logging
 import time
+
+from models.blog import BlogsResponse
+from services.blog_service import blog_service
 
 # Configure logging for CleverDocs backend
 logging.basicConfig(
@@ -18,106 +18,6 @@ app = FastAPI(
     description="AI-powered onboarding and knowledge sharing platform API",
     version="1.0.0"
 )
-
-# Pydantic models matching shared/types/blog.json schema
-class Author(BaseModel):
-    name: str = Field(..., min_length=1, max_length=100)
-    avatar: str = Field(..., description="Author avatar image URL")
-
-class TeamInfo(BaseModel):
-    teamName: str = Field(..., min_length=1, max_length=100)
-    email: str = Field(..., description="Team contact email")
-
-class Blog(BaseModel):
-    id: str
-    title: str = Field(..., min_length=1, max_length=200)
-    excerpt: str = Field(..., min_length=10, max_length=500)
-    content: str = Field(..., min_length=10)
-    author: Author
-    publishedAt: str = Field(..., pattern=r"^\d{4}-\d{2}-\d{2}$")
-    readTime: str = Field(..., pattern=r"^\d+ min read$")
-    tags: List[str] = Field(..., max_items=10)
-    coverImage: str = Field(..., description="Blog cover image URL")
-    avgRating: float = Field(..., ge=0, le=5)
-    totalRatings: int = Field(..., ge=0)
-    docType: Literal["official", "community"]
-    teamInfo: Optional[TeamInfo] = None
-
-class BlogsResponse(BaseModel):
-    status: str
-    data: List[Blog]
-    total: int
-    filteredTotal: int
-
-# Global variable to cache loaded blog data
-_cached_blogs: Optional[List[Blog]] = None
-
-def load_blogs_from_shared() -> List[Blog]:
-    """Load blog data from shared/data/blogs.json with caching."""
-    global _cached_blogs
-    
-    if _cached_blogs is not None:
-        return _cached_blogs
-    
-    try:
-        # Path to shared data relative to backend directory
-        shared_data_path = os.path.join(os.path.dirname(__file__), "..", "shared", "data", "blogs.json")
-        shared_data_path = os.path.normpath(shared_data_path)
-        
-        with open(shared_data_path, 'r') as f:
-            blogs_data = json.load(f)
-        
-        # Validate and parse blog data
-        _cached_blogs = [Blog(**blog) for blog in blogs_data]
-        logger.info(f"✅ Loaded {len(_cached_blogs)} blogs from shared data")
-        return _cached_blogs
-        
-    except FileNotFoundError:
-        logger.error(f"Blog data file not found at {shared_data_path}")
-        raise HTTPException(status_code=500, detail="Blog data unavailable")
-    except json.JSONDecodeError as e:
-        logger.error(f"Invalid JSON in blog data: {e}")
-        raise HTTPException(status_code=500, detail="Blog data corrupted")
-    except Exception as e:
-        logger.error(f"Error loading blog data: {e}")
-        raise HTTPException(status_code=500, detail="Internal server error")
-
-def filter_blogs(blogs: List[Blog], doc_type: Optional[str], tags: Optional[List[str]]) -> List[Blog]:
-    """Filter blogs by docType and tags with comprehensive validation."""
-    if not blogs:
-        logger.warning("No blogs available for filtering")
-        return []
-    
-    filtered = blogs
-    
-    # DocType filtering with validation
-    if doc_type:
-        doc_type = doc_type.strip()
-        if doc_type not in ["official", "community"]:
-            logger.warning(f"Invalid docType requested: {doc_type}")
-            raise HTTPException(
-                status_code=400, 
-                detail="Invalid docType. Must be 'official' or 'community'"
-            )
-        filtered = [blog for blog in filtered if blog.docType == doc_type]
-        logger.info(f"Filtered by docType '{doc_type}': {len(filtered)} results")
-    
-    # Tags filtering with validation
-    if tags:
-        # Clean and validate tags
-        tags_lower = [tag.strip().lower() for tag in tags if tag.strip()]
-        if not tags_lower:
-            logger.warning("Empty tags provided after cleaning")
-            return filtered
-        
-        # Blog must have at least one of the requested tags (case-insensitive)
-        filtered = [
-            blog for blog in filtered 
-            if any(tag in [blog_tag.lower() for blog_tag in blog.tags] for tag in tags_lower)
-        ]
-        logger.info(f"Filtered by tags {tags_lower}: {len(filtered)} results")
-    
-    return filtered
 
 @app.get("/")
 def read_root():
@@ -139,16 +39,16 @@ async def get_blogs(
     start_time = time.time()
     
     try:
-        # Load all blogs
-        all_blogs = load_blogs_from_shared()
+        # Load all blogs using service
+        all_blogs = blog_service.get_all_blogs()
         
         # Parse tags parameter
         parsed_tags = None
         if tags:
             parsed_tags = [tag.strip() for tag in tags.split(",") if tag.strip()]
         
-        # Apply filters
-        filtered_blogs = filter_blogs(all_blogs, docType, parsed_tags)
+        # Apply filters using service
+        filtered_blogs = blog_service.get_filtered_blogs(docType, parsed_tags)
         
         # Calculate processing time
         processing_time_ms = int((time.time() - start_time) * 1000)
