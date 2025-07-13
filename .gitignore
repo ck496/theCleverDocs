@@ -1,6 +1,8 @@
 # Environment variables
 .env
 .env.*
+venv
+venv_linux
 
 # VS Code and IDE settings
 .vscode/
@@ -16,6 +18,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.ruff_cache
+.pytest_cache
 
 # Node modules (if any accidentally placed in root)
 node_modules/
@@ -23,3 +27,4 @@ node_modules/
 # Local build or temp files
 *.tmp
 *.out 
+
