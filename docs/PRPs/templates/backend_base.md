@@ -1,164 +1,156 @@
 ---
-name: "CleverDocs Backend PRP Template v1"
+name: "CleverDocs Backend PRP Template v2"
 description: |
   Backend-focused PRP template for FastAPI + Python + AWS features in CleverDocs.
-  Optimized for tier-specific development with comprehensive validation loops.
+  Optimized for comprehensive context engineering with validation loops and research phases.
+  Eliminates redundancy by referencing centralized documentation.
 ---
 
 # CleverDocs Backend Feature Implementation PRP
 
-## Core Principles (Reference: `docs/CLAUDE.md`)
+## Core Principles
 
 1. **Backend-Only Focus**: Single tier implementation - no frontend or infrastructure mixing
-2. **Context is King**: All necessary documentation and patterns included
-3. **Validation Loops**: Executable commands to verify implementation quality
-4. **Progressive Success**: Start simple, validate, enhance
-5. **API-First**: Define OpenAPI contracts before implementation
+2. **Context is King**: All necessary documentation and patterns referenced, not duplicated
+3. **Validation Loops**: Executable commands to verify implementation quality at each phase
+4. **Progressive Success**: Start simple, validate, enhance with confidence
+5. **CleverDocs Mission**: Every feature must accelerate engineer onboarding and knowledge sharing
 
 ---
 
 ## Goal
 
-**Feature Name**: [What backend functionality needs to be built]
+**Feature Name**: [Specific backend functionality to be built]
 
-**Business Value**: [How this supports CleverDocs mission - reference `README.md` and `docs/PRDs/CleverDocsPRD.md`]
+**Business Value**: [How this supports CleverDocs' mission of accelerating engineer onboarding through AI-powered content transformation - reference core features from README.md]
 
 **API Contract**: [RESTful endpoints, request/response formats, authentication requirements]
 
 ## Why This Feature
 
-- **User Impact**: [How this accelerates engineer onboarding and knowledge sharing]
-- **Technical Value**: [Integration with existing CleverDocs backend systems]
-- **CleverDocs Mission**: [Reference core features: note→blog transformation, multi-level content, AI integration]
+- **User Impact**: [How this specifically accelerates engineer onboarding and knowledge sharing]
+- **Technical Value**: [Integration with existing CleverDocs systems and architecture]
+- **Mission Alignment**: [Reference specific core capabilities: note→blog transformation, multi-level content, AI integration, community features]
 
 ## What to Build
 
-**Endpoints**: [Specific REST API endpoints to implement]
-**Data Models**: [Pydantic models for request/response validation]
-**Business Logic**: [Core services and processing]
-**Integration**: [AWS services, external APIs, database operations]
+**API Endpoints**: [Specific REST endpoints with HTTP methods]
+**Data Models**: [Pydantic models for validation and serialization]
+**Business Logic**: [Core services and processing logic]
+**Integration Points**: [AWS services, external APIs, database operations if needed]
 
 ### Success Criteria
 
-- [ ] API endpoints respond with correct HTTP status codes and formats
-- [ ] All inputs validated with Pydantic models (no unvalidated data)
-- [ ] Comprehensive error handling with user-friendly messages
-- [ ] OpenAPI documentation auto-generated and accurate
-- [ ] Performance meets requirements (< 200ms for simple queries)
-- [ ] Security validated (no credential exposure, proper input validation)
-- [ ] Tests pass (unit tests + integration tests)
-- [ ] Aligns with CleverDocs content generation and onboarding goals
+- [ ] **API Contract**: All endpoints respond with correct HTTP status codes and formats
+- [ ] **Input Validation**: All inputs validated with Pydantic models (zero unvalidated data)
+- [ ] **Error Handling**: Comprehensive error handling with user-friendly messages
+- [ ] **Documentation**: OpenAPI documentation auto-generated and accurate
+- [ ] **Performance**: Response times < 200ms for simple operations, < 2s for complex AI operations
+- [ ] **Security**: No credential exposure, proper input validation, HTTPS-ready
+- [ ] **Testing**: Unit tests and integration tests pass with >90% coverage
+- [ ] **CleverDocs Alignment**: Feature demonstrably supports core mission and user workflows
 
-## All Needed Context
+## Essential Context References
 
-### **MUST READ First** (Context Files)
+### **Project Foundation (Read First)**
 
 ```yaml
-# Project Context & Rules
-- file: docs/CLAUDE.md
-  why: Global AI agent rules and CleverDocs-specific requirements
-
-- file: docs/CODEBASE_GUIDE.md
-  why: Current backend state (✅ api.py exists, 🔄 app/ structure planned)
-
-- file: docs/development/CODING_STANDARDS.md
-  why: Backend patterns, naming conventions, implementation templates
-
+# Core Project Understanding - MUST READ in order
 - file: README.md
   why: CleverDocs purpose, key features, business context
 
+- file: docs/CLAUDE.md
+  why: Global AI agent rules and CleverDocs-specific behavioral requirements
+
+- file: docs/CODEBASE_GUIDE.md
+  section: "🌐 backend/ - FastAPI Server"
+  why: Current backend state (✅ api.py vs 🔄 planned app/ structure)
+
+- file: docs/development/CODING_STANDARDS.md
+  section: "🐍 Backend Standards (FastAPI + Python)"
+  why: Backend patterns, error handling, naming conventions
+
 - file: docs/PRDs/CleverDocsPRD.md
   why: Detailed business requirements and user goals
-
-- file: backend/README.md
-  why: Current backend structure and planned organization
 ```
 
-### **FastAPI + Python Documentation**
+### **Current Implementation State**
 
 ```yaml
-# External Documentation (official sources)
+# What Actually Exists vs What's Planned
+- file: backend/api.py
+  why: Current minimal FastAPI implementation - understand existing patterns
+
+- file: backend/README.md
+  why: Backend-specific setup and structure documentation
+# Note: See docs/CODEBASE_GUIDE.md for full backend structure (current ✅ vs planned 🔄)
+```
+
+### **External Documentation & Patterns**
+
+```yaml
+# Official FastAPI & Python Documentation
 - url: https://fastapi.tiangolo.com/async/
   section: Async patterns and dependency injection
-  why: FastAPI best practices for async I/O operations
+  why: Async/await best practices for I/O operations
 
-- url: https://docs.pydantic.dev/latest/
-  section: Models and validation
+- url: https://docs.pydantic.dev/latest/concepts/models/
+  section: Model validation and serialization
   why: Request/response validation patterns
 
 - url: https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html
   section: AWS SDK Python integration
   why: S3, DynamoDB, Bedrock client patterns (if AWS integration needed)
+
+# CleverDocs-Specific AI Patterns (if AI integration needed)
+- url: https://docs.aws.amazon.com/bedrock/latest/userguide/getting-started.html
+  section: Content generation with Bedrock
+  why: Multi-level content generation (beginner/intermediate/expert)
 ```
 
-### Current Backend State (✅ What Actually Exists)
+## Implementation Architecture Decision
+
+### **Structural Strategy** (Choose based on feature complexity)
+
+**Option A: Extend Current Structure** (Simple features)
 
 ```python
-# backend/api.py - Current implementation ✅
-from fastapi import FastAPI
+# Extend backend/api.py directly
+# Use for: Single endpoint, minimal business logic, MVP speed
+# Pattern: Add routes to existing FastAPI app
 
-app = FastAPI()
-
-@app.get("/")
-def read_root():
-    return {"message": "Hello, World!"}
-
-# Commented out routes (planned):
-# - GET /blogs
-# - GET /blogs/{blog_id}
-# - POST /blogs
-# - PUT /blogs/{blog_id}
-# - DELETE /blogs/{blog_id}
+@app.post("/api/new-feature")
+async def new_feature_endpoint(request: FeatureRequest) -> FeatureResponse:
+    # Implementation here
 ```
 
-### Target Backend Structure (🔄 Migration Plan)
+**Option B: Migrate to Full Structure** (Complex features)
 
 ```bash
-# Planned structure from docs/CODEBASE_GUIDE.md
-backend/
-├── app/                        # 🔄 PLANNED - FastAPI app package
-│   ├── api/                    # 🔄 PLANNED - Route handlers
-│   │   └── [feature_name].py   # 🔄 TO BE CREATED
-│   ├── services/               # 🔄 PLANNED - Business logic
-│   │   └── [feature_name]_service.py  # 🔄 TO BE CREATED
-│   ├── models/                 # 🔄 PLANNED - Pydantic models
-│   │   └── [feature_name].py   # 🔄 TO BE CREATED
-│   ├── clients/                # 🔄 PLANNED - AWS service clients
-│   │   └── [aws_service].py    # 🔄 TO BE CREATED (if needed)
-│   ├── core/                   # 🔄 PLANNED - Config, security, dependencies
-│   │   ├── config.py           # 🔄 TO BE CREATED
-│   │   └── dependencies.py     # 🔄 TO BE CREATED
-│   └── main.py                 # 🔄 TO BE CREATED - New FastAPI entry point
-├── tests/                      # 🔄 PLANNED - Test suite
-│   ├── api/                    # 🔄 TO BE CREATED
-│   └── services/               # 🔄 TO BE CREATED
-├── api.py                      # ✅ EXISTS - Current basic FastAPI app
-├── .gitignore                  # ✅ EXISTS
-└── README.md                   # ✅ EXISTS
+# Implement planned backend/app/ structure
+# Use for: Multiple endpoints, AWS integration, complex business logic
+# See: docs/CODEBASE_GUIDE.md "Target Backend Structure (🔄 Migration Plan)"
 ```
 
-### Critical Implementation Notes
+**Document your choice with rationale.**
+
+## CleverDocs-Specific Implementation Patterns
+
+### **Error Handling Template**
 
 ```python
-# IMPORTANT: Current vs Planned Structure Decision
-#
-# Option 1: Extend current api.py (for simple features)
-# - Add routes directly to existing api.py
-# - Keep single-file approach for MVP
-#
-# Option 2: Migrate to app/ structure (for complex features)
-# - Create backend/app/ package structure
-# - Move existing routes to new structure
-# - Set up proper FastAPI application factory
+# Required error handling pattern for CleverDocs
+from fastapi import HTTPException
+from pydantic import ValidationError
+import logging
 
-# CleverDocs-Specific Patterns (from docs/development/CODING_STANDARDS.md)
-EXPERTISE_LEVELS = ["beginner", "intermediate", "expert"]
+logger = logging.getLogger(__name__)
 
-# Error handling pattern for CleverDocs
 try:
-    result = await service.process_content(data)
+    result = await service.process_request(validated_data)
     return {"status": "success", "data": result}
 except ValidationError as e:
+    logger.warning(f"Validation error: {e}")
     raise HTTPException(status_code=400, detail=f"Invalid input: {e}")
 except AIServiceError as e:
     logger.error(f"AI service failed: {e}")
@@ -168,459 +160,179 @@ except Exception as e:
     raise HTTPException(status_code=500, detail="Internal server error")
 ```
 
-## Implementation Blueprint
-
-### **Phase 1: API Contract Definition**
-
-**Rationale**: API-first development ensures frontend integration clarity
-
-#### Task 1.1: Define OpenAPI Specification
-
-```yaml
-# Create or update OpenAPI spec for new endpoints
-# Location: backend/openapi/[feature_name].yaml (or inline in FastAPI)
-
-paths:
-  /api/[feature_name]:
-    post:
-      summary: [Brief description]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/[FeatureName]Request"
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/[FeatureName]Response"
-        400:
-          description: Validation error
-        500:
-          description: Server error
-```
-
-#### Task 1.2: Create Pydantic Models
+### **Multi-Level Content Pattern** (if AI feature)
 
 ```python
-# File: backend/app/models/[feature_name].py (or add to api.py for simple features)
-from pydantic import BaseModel, Field, validator
-from typing import Optional, List
-from datetime import datetime
+# CleverDocs expertise level pattern
+EXPERTISE_LEVELS = ["beginner", "intermediate", "expert"]
 
-class [FeatureName]Request(BaseModel):
-    """Request model for [feature description]"""
-    title: str = Field(..., min_length=3, max_length=200, description="Feature title")
-    content: str = Field(..., min_length=10, description="Feature content")
-    # Add CleverDocs-specific fields
-    expertise_level: str = Field(..., regex="^(beginner|intermediate|expert)$")
-
-    @validator('title')
-    def validate_title(cls, v):
-        # Custom validation logic
-        return v.strip()
-
-class [FeatureName]Response(BaseModel):
-    """Response model for [feature description]"""
-    id: str
-    title: str
+class ContentRequest(BaseModel):
     content: str
-    expertise_level: str
-    created_at: datetime
-    # Add CleverDocs-specific response fields
+    expertise_level: Literal["beginner", "intermediate", "expert"] = "intermediate"
 
-# Validation Command
-cd backend && python -c "from app.models.[feature_name] import *; print('✅ Models valid')"
+async def generate_content_by_level(request: ContentRequest) -> ContentResponse:
+    # Implementation using shared/prompts/ templates
 ```
 
-### **Phase 2: Business Logic Implementation**
+## Progressive Implementation Blueprint
 
-**Rationale**: Core logic before API routes ensures separation of concerns
-
-#### Task 2.1: Create Service Layer
-
-```python
-# File: backend/app/services/[feature_name]_service.py
-from typing import List, Optional
-from app.models.[feature_name] import [FeatureName]Request, [FeatureName]Response
-# Import AWS clients if needed (reference docs/development/CODING_STANDARDS.md)
-
-class [FeatureName]Service:
-    """Business logic for [feature description]"""
-
-    def __init__(self, db_client=None, ai_client=None):
-        self.db = db_client  # DynamoDB, PostgreSQL, etc.
-        self.ai = ai_client  # AWS Bedrock for CleverDocs AI features
-
-    async def create_[feature_name](self, request: [FeatureName]Request, user_id: str) -> [FeatureName]Response:
-        """
-        Create new [feature] with validation and processing
-
-        Args:
-            request: Validated request data
-            user_id: Current user identifier
-
-        Returns:
-            [FeatureName]Response: Created feature data
-
-        Raises:
-            ValueError: Invalid input data
-            AIServiceError: AI processing failure (for CleverDocs AI features)
-        """
-        try:
-            # Implement business logic
-            # - Validate business rules
-            # - Process data
-            # - Store in database
-            # - Generate AI content if needed (CleverDocs specific)
-
-            return [FeatureName]Response(...)
-
-        except Exception as e:
-            logger.error(f"Service error in create_[feature_name]: {e}")
-            raise ValueError(f"Failed to create [feature]: {str(e)}")
-
-# Validation Command
-cd backend && python -c "from app.services.[feature_name]_service import [FeatureName]Service; print('✅ Service valid')"
-```
-
-#### Task 2.2: Add AWS Integration (if needed)
-
-```python
-# File: backend/app/clients/[aws_service].py (if AWS integration required)
-import boto3
-from botocore.exceptions import ClientError
-from tenacity import retry, stop_after_attempt, wait_exponential
-import logging
-
-logger = logging.getLogger(__name__)
-
-class [AWSService]Client:
-    """AWS [service] client for CleverDocs backend"""
-
-    def __init__(self, region_name: str = "us-west-2"):
-        self.client = boto3.client('[service_name]', region_name=region_name)
-
-    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
-    async def [operation_name](self, params: dict) -> dict:
-        """[Operation description]"""
-        try:
-            response = self.client.[operation](params)
-            logger.info(f"AWS [service] operation successful")
-            return response
-        except ClientError as e:
-            logger.error(f"AWS [service] error: {e}")
-            raise
-
-# Validation Command
-cd backend && python -c "from app.clients.[aws_service] import [AWSService]Client; print('✅ AWS client valid')"
-```
-
-### **Phase 3: API Route Implementation**
-
-**Rationale**: Routes built on validated business logic and models
-
-#### Task 3.1: Create FastAPI Routes
-
-```python
-# Option A: Add to existing api.py (for simple features)
-# Option B: Create backend/app/api/[feature_name].py (for complex features)
-
-from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
-from app.models.[feature_name] import [FeatureName]Request, [FeatureName]Response
-from app.services.[feature_name]_service import [FeatureName]Service
-import logging
-
-logger = logging.getLogger(__name__)
-router = APIRouter(prefix="/api/[feature_name]", tags=["[feature_name]"])
-
-@router.post("/", response_model=[FeatureName]Response, status_code=201)
-async def create_[feature_name](
-    request: [FeatureName]Request,
-    background_tasks: BackgroundTasks,
-    # Add authentication dependency when ready
-    # current_user: str = Depends(get_current_user),
-    service: [FeatureName]Service = Depends(get_[feature_name]_service)
-):
-    """
-    Create new [feature]
-
-    - **request**: [Feature] data with validation
-    - **Returns**: Created [feature] with generated ID
-
-    Supports CleverDocs core features:
-    - Multi-level expertise content generation
-    - AI-powered content transformation
-    """
-    try:
-        # For now, use placeholder user_id (replace with auth when ready)
-        user_id = "user_123"  # TODO: Replace with actual authentication
-
-        result = await service.create_[feature_name](request, user_id)
-
-        # Add background tasks if needed (AI processing, notifications, etc.)
-        # background_tasks.add_task(process_[feature_name]_async, result.id)
-
-        return result
-
-    except ValueError as e:
-        logger.warning(f"Validation error in create_[feature_name]: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        logger.error(f"Unexpected error in create_[feature_name]: {e}")
-        raise HTTPException(status_code=500, detail="Internal server error")
-
-# Dependency injection function
-async def get_[feature_name]_service() -> [FeatureName]Service:
-    """Dependency injection for [FeatureName]Service"""
-    # Initialize with required clients
-    return [FeatureName]Service()
-
-# Add router to main app (in api.py or app/main.py)
-# app.include_router(router)
-```
-
-#### Task 3.2: Update Main Application
-
-```python
-# Update backend/api.py (current approach) or create backend/app/main.py (new structure)
-
-# Current api.py approach:
-from fastapi import FastAPI
-# Import your new router
-# from .api.[feature_name] import router as [feature_name]_router
-
-app = FastAPI(
-    title="CleverDocs API",
-    description="AI-powered platform for transforming notes into polished tech blogs",
-    version="1.0.0"
-)
-
-# Include your router
-# app.include_router([feature_name]_router)
-
-@app.get("/")
-def read_root():
-    return {"message": "CleverDocs API - Accelerating engineer onboarding through AI-powered knowledge sharing"}
-```
-
-### **Phase 4: Testing Implementation**
-
-**Rationale**: Comprehensive testing ensures reliability and prevents regressions
-
-#### Task 4.1: Unit Tests
-
-```python
-# File: backend/tests/services/test_[feature_name]_service.py
-import pytest
-from unittest.mock import Mock, AsyncMock
-from app.services.[feature_name]_service import [FeatureName]Service
-from app.models.[feature_name] import [FeatureName]Request
-
-class Test[FeatureName]Service:
-    """Unit tests for [FeatureName]Service"""
-
-    @pytest.fixture
-    def service(self):
-        """Create service instance with mocked dependencies"""
-        mock_db = Mock()
-        mock_ai = Mock()
-        return [FeatureName]Service(db_client=mock_db, ai_client=mock_ai)
-
-    @pytest.fixture
-    def valid_request(self):
-        """Valid request data for testing"""
-        return [FeatureName]Request(
-            title="Test Feature",
-            content="Test content for CleverDocs feature",
-            expertise_level="intermediate"
-        )
-
-    @pytest.mark.asyncio
-    async def test_create_[feature_name]_success(self, service, valid_request):
-        """Test successful [feature] creation"""
-        user_id = "test_user_123"
-
-        result = await service.create_[feature_name](valid_request, user_id)
-
-        assert result.title == valid_request.title
-        assert result.expertise_level == valid_request.expertise_level
-        assert result.id is not None
-
-    @pytest.mark.asyncio
-    async def test_create_[feature_name]_invalid_data(self, service):
-        """Test [feature] creation with invalid data"""
-        invalid_request = [FeatureName]Request(
-            title="",  # Invalid: too short
-            content="Test content",
-            expertise_level="invalid_level"  # Invalid: not in allowed values
-        )
-
-        with pytest.raises(ValueError):
-            await service.create_[feature_name](invalid_request, "user_123")
-
-# Validation Command
-cd backend && python -m pytest tests/services/test_[feature_name]_service.py -v
-```
-
-#### Task 4.2: API Integration Tests
-
-```python
-# File: backend/tests/api/test_[feature_name]_api.py
-import pytest
-from fastapi.testclient import TestClient
-from backend.api import app  # or from backend.app.main import app
-
-client = TestClient(app)
-
-class Test[FeatureName]API:
-    """Integration tests for [feature_name] API endpoints"""
-
-    def test_create_[feature_name]_success(self):
-        """Test successful API call to create [feature]"""
-        request_data = {
-            "title": "Test Feature via API",
-            "content": "Test content for CleverDocs API integration",
-            "expertise_level": "beginner"
-        }
-
-        response = client.post("/api/[feature_name]/", json=request_data)
-
-        assert response.status_code == 201
-        data = response.json()
-        assert data["title"] == request_data["title"]
-        assert data["id"] is not None
-
-    def test_create_[feature_name]_validation_error(self):
-        """Test API validation error handling"""
-        invalid_data = {
-            "title": "",  # Invalid: empty title
-            "content": "Test content",
-            "expertise_level": "invalid"  # Invalid level
-        }
-
-        response = client.post("/api/[feature_name]/", json=invalid_data)
-
-        assert response.status_code == 422  # Pydantic validation error
-
-    def test_create_[feature_name]_missing_field(self):
-        """Test API with missing required fields"""
-        incomplete_data = {
-            "title": "Test Feature"
-            # Missing content and expertise_level
-        }
-
-        response = client.post("/api/[feature_name]/", json=incomplete_data)
-
-        assert response.status_code == 422
-
-# Validation Command
-cd backend && python -m pytest tests/api/test_[feature_name]_api.py -v
-```
-
-## Final Validation Loop
-
-### **Level 1: Code Quality & Syntax**
+### **Phase 1: Data Models & Validation**
 
 ```bash
-# Run in backend/ directory - ALL must pass before proceeding
+# Task 1.1: Create Pydantic models
+CREATE backend/app/models/[feature_name].py:
+- Define request/response models
+- Add comprehensive validation rules
+- Include docstrings for OpenAPI documentation
 
-# Python syntax and import validation
-python -c "from app.models.[feature_name] import *; print('✅ Models import successfully')"
-python -c "from app.services.[feature_name]_service import *; print('✅ Service imports successfully')"
+# Validation Command:
+python -c "from backend.app.models.[feature_name] import *; print('Models import successfully')"
+```
+
+### **Phase 2: API Endpoint Implementation**
+
+```bash
+# Task 2.1: Implement API routes
+MODIFY/CREATE backend/api.py OR backend/app/api/[feature_name].py:
+- Implement async endpoint functions
+- Use dependency injection for services
+- Add comprehensive error handling
+
+# Validation Command:
+cd backend && python -m uvicorn api:app --reload &
+sleep 2
+curl -X GET http://localhost:8000/docs  # Check OpenAPI docs generated
+curl -X POST http://localhost:8000/api/[endpoint] -H "Content-Type: application/json" -d '{"test": "data"}'
+kill %1
+```
+
+### **Phase 3: Business Logic Services**
+
+```bash
+# Task 3.1: Implement service layer
+CREATE backend/app/services/[feature_name]_service.py:
+- Implement core business logic
+- Handle AWS service integration (if needed)
+- Add logging and monitoring
+
+# Validation Command:
+python -c "from backend.app.services.[feature_name]_service import *; print('Service imports successfully')"
+```
+
+### **Phase 4: Integration Testing**
+
+```bash
+# Task 4.1: Create comprehensive tests
+CREATE backend/tests/api/test_[feature_name].py:
+- Unit tests for service layer
+- Integration tests for API endpoints
+- Performance tests for response times
+
+# Validation Commands:
+cd backend
+python -m pytest tests/api/test_[feature_name].py -v
+python -m pytest tests/api/test_[feature_name].py --cov=app --cov-report=term-missing
+```
+
+### **Phase 5: Performance & Security Validation**
+
+```bash
+# Performance validation
+python -m pytest tests/performance/ -v --benchmark-only
+
+# Security validation
+python -m bandit -r backend/app/
+python -m safety check
 
 # Type checking (if using mypy)
-# mypy app/models/[feature_name].py
-# mypy app/services/[feature_name]_service.py
-
-# Code formatting (if using black)
-# black app/models/[feature_name].py app/services/[feature_name]_service.py
+python -m mypy backend/app/ --ignore-missing-imports
 ```
 
-### **Level 2: Unit & Integration Tests**
+## Integration Readiness Checklist
+
+### **Frontend Integration**
+
+- [ ] OpenAPI spec available at `/docs` endpoint for API client generation
+- [ ] Error response formats standardized for frontend error handling
+- [ ] CORS configured for frontend development
+- [ ] Response schemas optimized for frontend consumption
+
+### **Infrastructure Integration**
+
+- [ ] Environment variables documented for configuration
+- [ ] AWS service requirements documented (DynamoDB tables, S3 buckets, etc.)
+- [ ] Database schema requirements specified
+- [ ] Deployment configuration ready
+
+### **Monitoring & Observability**
+
+- [ ] Structured logging implemented
+- [ ] Health check endpoint available
+- [ ] Error tracking configured
+- [ ] Performance metrics captured
+
+## Quality Assurance Validation
+
+### **Functional Validation**
 
 ```bash
-# All tests must pass - fix any failures before proceeding
+# End-to-end API testing
+python scripts/test_api_endpoints.py --feature=[feature_name]
 
-# Unit tests
-python -m pytest tests/services/test_[feature_name]_service.py -v
-
-# API integration tests
-python -m pytest tests/api/test_[feature_name]_api.py -v
-
-# Coverage check (optional but recommended)
-python -m pytest tests/ --cov=app --cov-report=term-missing
+# Load testing (for production readiness)
+locust -f tests/load/test_[feature_name]_load.py --host=http://localhost:8000
 ```
 
-### **Level 3: API Functionality**
+### **Code Quality Validation**
 
 ```bash
-# Start the development server
-python -m uvicorn api:app --reload  # Current structure
-# OR python -m uvicorn app.main:app --reload  # New structure
+# Code formatting
+python -m black backend/app/ --check
+python -m isort backend/app/ --check-only
 
-# Manual API testing (replace with actual endpoint)
-curl -X POST http://localhost:8000/api/[feature_name] \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Test Feature",
-    "content": "Test content for manual validation",
-    "expertise_level": "intermediate"
-  }'
-
-# Expected: HTTP 201 with valid JSON response
-# Expected: Proper error handling for invalid requests
+# Linting
+python -m flake8 backend/app/
+python -m pylint backend/app/
 ```
 
-### **Level 4: CleverDocs Mission Alignment**
+### **Security Validation**
 
 ```bash
-# Verify the feature supports core CleverDocs goals:
+# Dependency vulnerability check
+python -m safety check
 
-✅ Accelerates engineer onboarding (how does this feature help?)
-✅ Supports knowledge sharing (enables content creation/discovery?)
-✅ AI-powered content transformation (integrates with content generation?)
-✅ Multi-level expertise support (beginner/intermediate/expert variants?)
-✅ Secure and performant (< 200ms response time, proper validation?)
+# Static security analysis
+python -m bandit -r backend/app/
+
+# Secrets detection
+git secrets --scan backend/
 ```
 
-## Success Confirmation Checklist
+## Success Confirmation Protocol
 
-Before marking this backend feature as complete:
+Before marking this backend feature as complete, verify:
 
-- [ ] **Business Alignment**: Feature supports CleverDocs mission from `README.md` and PRD
-- [ ] **API Contract**: OpenAPI documentation auto-generated and accurate
-- [ ] **Data Validation**: All inputs validated with Pydantic models
-- [ ] **Error Handling**: Comprehensive error handling with user-friendly messages
-- [ ] **Testing**: Unit tests and integration tests pass
-- [ ] **Performance**: API responses < 200ms for simple operations
-- [ ] **Security**: No credential exposure, proper input validation
-- [ ] **Code Quality**: Follows patterns from `docs/development/CODING_STANDARDS.md`
-- [ ] **Documentation**: Code is well-documented with docstrings
-- [ ] **Integration Ready**: API contracts defined for frontend consumption
+- [ ] **Mission Alignment**: Feature demonstrably supports CleverDocs' core goal of accelerating engineer onboarding
+- [ ] **Performance**: All response times meet requirements (< 200ms simple, < 2s complex)
+- [ ] **Security**: No security vulnerabilities detected, all inputs validated
+- [ ] **Quality**: Code coverage >90%, all linting passes
+- [ ] **Integration**: API contracts defined and tested for frontend consumption
+- [ ] **Documentation**: OpenAPI docs accurate and comprehensive
+- [ ] **Error Handling**: All error scenarios handled gracefully with user-friendly messages
+- [ ] **Monitoring**: Structured logging and health checks implemented
 
-## Cross-Tier Integration Notes
+## Implementation Confidence Score
 
-**For Frontend Integration** (future implementation):
+Rate this PRP on implementation success probability (1-10):
 
-- OpenAPI spec available at `/docs` endpoint for frontend API client generation
-- Error response formats standardized for frontend error handling
-- Authentication hooks prepared (placeholder for now)
+- **Context Completeness** (8-10): All necessary docs referenced, no missing context
+- **Technical Clarity** (8-10): Implementation steps specific and actionable
+- **Validation Thoroughness** (8-10): Comprehensive testing and quality checks
+- **CleverDocs Alignment** (8-10): Feature clearly supports core mission
+- **Error Prevention** (8-10): Common pitfalls identified and addressed
 
-**For Infrastructure Integration** (future implementation):
-
-- Database requirements documented (DynamoDB tables, indexes needed)
-- AWS service requirements documented (S3, Bedrock, Lambda if needed)
-- Environment variables documented for configuration
-
-**API Contract Sharing**:
-
-- Consider adding response schemas to `shared/types/` for frontend TypeScript generation
-- Document any new shared constants or enums needed across tiers
+**Target: 8-10 overall** for high confidence in bug-free, efficient implementation.
 
 ---
 
-**This PRP ensures backend features are built with quality, security, and integration readiness while staying focused on CleverDocs' core mission of accelerating engineer onboarding through AI-powered knowledge sharing.**
+**Note**: This template eliminates redundancy by referencing centralized documentation instead of duplicating information. All file structure, naming conventions, and architectural details are maintained in their authoritative locations (`docs/CODEBASE_GUIDE.md`, `docs/CLAUDE.md`, etc.)
