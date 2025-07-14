@@ -4,159 +4,189 @@ Unit tests for Pydantic models used in the blog feature.
 Tests focus on validation logic and serialization.
 """
 import pytest
-from pydantic import BaseModel, Field, ValidationError
-from typing import Optional, List, Literal
-from datetime import datetime
-
-
-# Example model (would normally be imported from backend.app.models.blog)
-class BlogRequest(BaseModel):
-    """Request model for creating/updating a blog post."""
-    title: str = Field(..., min_length=1, max_length=200)
-    content: str = Field(..., min_length=10)
-    author: str = Field(..., min_length=1)
-    expertise_level: Literal["beginner", "intermediate", "expert"] = "intermediate"
-    tags: Optional[List[str]] = Field(default_factory=list, max_items=10)
-    
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "title": "Getting Started with FastAPI",
-                "content": "FastAPI is a modern web framework...",
-                "author": "John Doe",
-                "expertise_level": "beginner",
-                "tags": ["python", "fastapi", "tutorial"]
-            }
-        }
-
-
-class BlogResponse(BlogRequest):
-    """Response model for blog posts."""
-    id: str
-    created_at: datetime
-    updated_at: datetime
-    word_count: int
-    reading_time_minutes: int
+from pydantic import ValidationError
+from models.blog import Blog, Author, TeamInfo, BlogsResponse
 
 
 class TestBlogModels:
     """Test suite for blog-related Pydantic models."""
     
-    # Test 1: Expected use case - Valid blog request
-    def test_blog_request_with_valid_data(self):
-        """Test that valid blog data creates model successfully."""
+    # Test 1: Expected use case - Valid blog with new content structure
+    def test_blog_with_valid_expertise_content(self):
+        """Test that valid blog data with expertise content creates model successfully."""
         # Arrange
         valid_data = {
+            "id": "1",
             "title": "Understanding Python Type Hints",
-            "content": "Type hints in Python help improve code readability and catch errors early.",
-            "author": "Jane Developer",
-            "expertise_level": "intermediate",
-            "tags": ["python", "types", "best-practices"]
+            "excerpt": "A comprehensive guide to Python type hints",
+            "content": {
+                "beginner": "Python type hints are simple annotations that help...",
+                "intermediate": "Type hints in Python provide static type information...",
+                "expert": "Advanced type hinting with generics and protocols..."
+            },
+            "author": {
+                "name": "Jane Developer",
+                "avatar": "https://example.com/avatar.jpg"
+            },
+            "publishedAt": "2024-01-15",
+            "readTime": "5 min read",
+            "tags": ["python", "types", "best-practices"],
+            "coverImage": "https://example.com/cover.jpg",
+            "avgRating": 4.5,
+            "totalRatings": 120,
+            "docType": "community"
         }
         
         # Act
-        blog = BlogRequest(**valid_data)
+        blog = Blog(**valid_data)
         
         # Assert
         assert blog.title == valid_data["title"]
-        assert blog.content == valid_data["content"]
-        assert blog.author == valid_data["author"]
-        assert blog.expertise_level == "intermediate"
+        assert isinstance(blog.content, dict)
+        assert "beginner" in blog.content
+        assert "intermediate" in blog.content
+        assert "expert" in blog.content
+        assert blog.author.name == "Jane Developer"
+        assert blog.docType == "community"
         assert len(blog.tags) == 3
     
-    # Test 2: Edge case - Minimum valid data
-    def test_blog_request_with_minimum_data(self):
-        """Test model with only required fields."""
+    # Test 2: Edge case - Official blog with team info
+    def test_blog_with_official_doc_type_and_team_info(self):
+        """Test official blog with required team info."""
         # Arrange
-        minimal_data = {
-            "title": "A",  # Minimum length title
-            "content": "Short post",  # Exactly 10 characters
-            "author": "X"  # Single character author
+        official_data = {
+            "id": "2",
+            "title": "Official Documentation",
+            "excerpt": "Official guide to our platform",
+            "content": {
+                "beginner": "Welcome to our platform...",
+                "intermediate": "Our platform provides advanced features...",
+                "expert": "Enterprise-level configuration and customization..."
+            },
+            "author": {
+                "name": "Team Lead",
+                "avatar": "https://example.com/team-avatar.jpg"
+            },
+            "publishedAt": "2024-01-20",
+            "readTime": "10 min read",
+            "tags": ["official", "documentation"],
+            "coverImage": "https://example.com/official-cover.jpg",
+            "avgRating": 4.8,
+            "totalRatings": 200,
+            "docType": "official",
+            "teamInfo": {
+                "teamName": "Platform Team",
+                "email": "platform@example.com"
+            }
         }
         
         # Act
-        blog = BlogRequest(**minimal_data)
+        blog = Blog(**official_data)
         
         # Assert
-        assert blog.title == "A"
-        assert blog.content == "Short post"
-        assert blog.expertise_level == "intermediate"  # Default value
-        assert blog.tags == []  # Default empty list
+        assert blog.docType == "official"
+        assert blog.teamInfo is not None
+        assert blog.teamInfo.teamName == "Platform Team"
+        assert blog.teamInfo.email == "platform@example.com"
     
-    # Test 3: Failure case - Invalid data raises validation error
-    def test_blog_request_with_empty_title_raises_error(self):
-        """Test that empty title raises validation error."""
+    # Test 3: Failure case - Invalid content structure raises error
+    def test_blog_with_invalid_content_structure_raises_error(self):
+        """Test that invalid content structure raises validation error."""
         # Arrange
         invalid_data = {
-            "title": "",  # Empty title
-            "content": "This is valid content",
-            "author": "Valid Author"
+            "id": "3",
+            "title": "Invalid Content Blog",
+            "excerpt": "This blog has invalid content structure",
+            "content": "This should be a dict with expertise levels",  # Invalid: should be dict
+            "author": {
+                "name": "Author",
+                "avatar": "https://example.com/avatar.jpg"
+            },
+            "publishedAt": "2024-01-15",
+            "readTime": "5 min read",
+            "tags": ["test"],
+            "coverImage": "https://example.com/cover.jpg",
+            "avgRating": 4.0,
+            "totalRatings": 50,
+            "docType": "community"
         }
         
         # Act & Assert
         with pytest.raises(ValidationError) as exc_info:
-            BlogRequest(**invalid_data)
+            Blog(**invalid_data)
         
         errors = exc_info.value.errors()
-        assert len(errors) == 1
-        assert errors[0]["loc"] == ("title",)
-        assert "at least 1 character" in str(errors[0]["msg"])
+        assert any("content" in str(error["loc"]) for error in errors)
     
-    # Additional test: Title too long
-    def test_blog_request_with_title_too_long_raises_error(self):
-        """Test that title exceeding max length raises error."""
+    # Test 4: Failure case - Invalid docType raises error
+    def test_blog_with_invalid_doc_type_raises_error(self):
+        """Test that invalid docType raises validation error."""
         # Arrange
         invalid_data = {
-            "title": "A" * 201,  # 201 characters (max is 200)
-            "content": "Valid content",
-            "author": "Valid Author"
+            "id": "4",
+            "title": "Invalid DocType Blog",
+            "excerpt": "This blog has invalid docType",
+            "content": {
+                "beginner": "Content here",
+                "intermediate": "More content",
+                "expert": "Advanced content"
+            },
+            "author": {
+                "name": "Author",
+                "avatar": "https://example.com/avatar.jpg"
+            },
+            "publishedAt": "2024-01-15",
+            "readTime": "5 min read",
+            "tags": ["test"],
+            "coverImage": "https://example.com/cover.jpg",
+            "avgRating": 4.0,
+            "totalRatings": 50,
+            "docType": "invalid_type"  # Invalid: should be "official" or "community"
         }
         
         # Act & Assert
         with pytest.raises(ValidationError) as exc_info:
-            BlogRequest(**invalid_data)
+            Blog(**invalid_data)
         
         errors = exc_info.value.errors()
-        assert any("at most 200 characters" in str(error["msg"]) for error in errors)
+        assert any("docType" in str(error["loc"]) for error in errors)
     
-    # Test invalid expertise level
-    def test_blog_request_with_invalid_expertise_level_raises_error(self):
-        """Test that invalid expertise level raises error."""
+    # Test 5: BlogsResponse model works correctly
+    def test_blogs_response_model(self):
+        """Test that BlogsResponse model serializes correctly."""
         # Arrange
-        invalid_data = {
-            "title": "Valid Title",
-            "content": "Valid content here",
-            "author": "Valid Author",
-            "expertise_level": "super-advanced"  # Not in allowed values
-        }
+        sample_blog = Blog(
+            id="1",
+            title="Test Blog",
+            excerpt="Test excerpt",
+            content={
+                "beginner": "Beginner content",
+                "intermediate": "Intermediate content",
+                "expert": "Expert content"
+            },
+            author=Author(name="Author", avatar="https://example.com/avatar.jpg"),
+            publishedAt="2024-01-15",
+            readTime="5 min read",
+            tags=["test"],
+            coverImage="https://example.com/cover.jpg",
+            avgRating=4.0,
+            totalRatings=50,
+            docType="community"
+        )
         
-        # Act & Assert
-        with pytest.raises(ValidationError) as exc_info:
-            BlogRequest(**invalid_data)
-        
-        errors = exc_info.value.errors()
-        assert any("expertise_level" in str(error["loc"]) for error in errors)
-    
-    # Test serialization
-    def test_blog_response_serialization(self):
-        """Test that BlogResponse model serializes correctly."""
-        # Arrange
         response_data = {
-            "id": "blog-123",
-            "title": "Test Blog",
-            "content": "This is test content for serialization",
-            "author": "Test Author",
-            "created_at": datetime.now(),
-            "updated_at": datetime.now(),
-            "word_count": 6,
-            "reading_time_minutes": 1
+            "status": "success",
+            "data": [sample_blog],
+            "total": 1,
+            "filteredTotal": 1
         }
         
         # Act
-        blog_response = BlogResponse(**response_data)
-        json_data = blog_response.model_dump_json()
+        response = BlogsResponse(**response_data)
         
         # Assert
-        assert "blog-123" in json_data
-        assert "Test Blog" in json_data
-        assert "word_count" in json_data
+        assert response.status == "success"
+        assert len(response.data) == 1
+        assert response.total == 1
+        assert response.filteredTotal == 1
+        assert response.data[0].id == "1"
