@@ -63,7 +63,11 @@ const UploadNotes = () => {
     // Simple blog generation logic - in real app this would be AI-powered
     const lines = input.split("\n").filter((line) => line.trim());
     const title = lines[0] || "Untitled Blog Post";
-    const content = input;
+    const content = {
+      beginner: input,
+      intermediate: input,
+      expert: input,
+    };
     const excerpt = lines.slice(1, 3).join(" ").substring(0, 150) + "...";
 
     return {
@@ -76,12 +80,13 @@ const UploadNotes = () => {
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=User",
       },
       publishedAt: new Date().toISOString().split("T")[0],
-      readTime: `${Math.max(1, Math.ceil(content.split(" ").length / 200))} min read`,
+      readTime: `${Math.max(1, Math.ceil(input.split(" ").length / 200))} min read`,
       tags: ["User Generated", "Tech", "Blog"],
       coverImage:
         "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80",
       avgRating: 0,
       totalRatings: 0,
+      docType: "community",
     };
   };
 
@@ -118,7 +123,7 @@ const UploadNotes = () => {
       setGeneratedBlog(newBlog);
       setEditedTitle(newBlog.title);
       setEditedExcerpt(newBlog.excerpt);
-      setEditedContent(newBlog.content);
+      setEditedContent(newBlog.content.intermediate);
       setSuccess(`Blog ${newBlog.id} saved`);
       setStep(2);
     } catch (err) {
@@ -143,7 +148,11 @@ const UploadNotes = () => {
             ...blogs[blogIndex],
             title: editedTitle,
             excerpt: editedExcerpt,
-            content: editedContent,
+            content: {
+              beginner: editedContent,
+              intermediate: editedContent,
+              expert: editedContent,
+            },
           };
         }
       }

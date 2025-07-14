@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import {
   Box,
   Container,
@@ -24,11 +24,15 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useBlogs } from "@/hooks/useBlogs";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { ExpertiseSlider, sliderValueToExpertise, expertiseToSliderValue } from "@/components/ExpertiseSlider";
 
 const BlogDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { getBlogById, loading, updateBlogRating } = useBlogs();
   const blog = id ? getBlogById(id) : undefined;
+
+  // Expertise level state management
+  const [expertiseLevel, setExpertiseLevel] = useState<'beginner' | 'intermediate' | 'expert'>('intermediate');
 
   const isOfficial = blog?.docType === "official";
 
@@ -42,6 +46,23 @@ const BlogDetails = () => {
     isOfficial ? "gray.300" : "gray.200",
     isOfficial ? "gray.600" : "gray.700",
   );
+
+  // Helper function to convert slider value to expertise level
+  const handleExpertiseChange = (sliderValue: number) => {
+    const level = sliderValueToExpertise(sliderValue);
+    setExpertiseLevel(level);
+  };
+
+  // Helper function with fallback handling
+  const getCurrentContent = useMemo((): string => {
+    if (blog && typeof blog.content === 'object') {
+      return blog.content[expertiseLevel] || 
+             blog.content.intermediate || 
+             blog.content.beginner || 
+             '';
+    }
+    return '';
+  }, [blog, expertiseLevel]);
 
   if (loading) {
     return (
@@ -284,8 +305,25 @@ const BlogDetails = () => {
 
           <Divider />
 
+          {/* Expertise Level Slider */}
+          <Box mb={6} px={4}>
+            <Text 
+              fontSize="sm" 
+              fontWeight="medium" 
+              color={textColor} 
+              mb={3}
+              textAlign="center"
+            >
+              Content Level
+            </Text>
+            <ExpertiseSlider
+              value={expertiseToSliderValue(expertiseLevel)}
+              onChange={handleExpertiseChange}
+            />
+          </Box>
+
           {/* Content */}
-          <Box>{renderContent(blog.content)}</Box>
+          <Box>{renderContent(getCurrentContent)}</Box>
 
           <Divider />
 

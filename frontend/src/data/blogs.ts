@@ -2,12 +2,15 @@
 // Maintains exact same interface as the original frontend structure
 import blogsData from "../../../shared/data/blogs.json";
 
-// TypeScript interface matching the exact current frontend structure
 export interface Blog {
   id: string;
   title: string;
   excerpt: string;
-  content: string;
+  content: {
+    beginner: string;
+    intermediate: string;
+    expert: string;
+  };
   author: {
     name: string;
     avatar: string;
