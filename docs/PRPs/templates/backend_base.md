@@ -457,6 +457,35 @@ Rate this PRP on implementation success probability (1-10):
 
 **Target: 8-10 overall** for high confidence in bug-free, efficient implementation.
 
+## **MANDATORY: Feature Documentation**
+
+**🚨 CRITICAL REQUIREMENT**: Upon PRP completion, you MUST create a comprehensive feature implementation summary.
+
+### **Documentation Process**
+
+1. **Use Template**: Copy `docs/features/templates/backend-feature-summary.md`
+2. **Create Summary**: Save as `docs/features/implemented/backend/YYYY-MM-DD-feature-name-backend.md`
+3. **Complete All Sections**:
+   - Implementation details with phase breakdown
+   - All files created/modified with specific changes
+   - API endpoints with request/response schemas
+   - Testing performed (unit, integration, performance)
+   - Database changes and migration scripts
+   - Security considerations and error handling
+
+### **Success Criteria**
+- [ ] **Feature Summary Created**: Comprehensive documentation following template
+- [ ] **All Phases Documented**: Each implementation phase with tasks and testing
+- [ ] **API Documentation**: All endpoints with request/response examples
+- [ ] **Files Catalogued**: Complete list of created/modified files with descriptions
+- [ ] **Testing Recorded**: All unit, integration, and manual testing documented
+- [ ] **Security Verified**: Input validation, error handling, and security measures documented
+- [ ] **Performance Measured**: Response times, optimizations, and scalability considerations
+- [ ] **Database Changes**: All schema changes, migrations, and indexing documented
+- [ ] **Troubleshooting Added**: Common issues, debug information, and monitoring guidance
+
+**The PRP is NOT considered complete until the feature documentation is created.**
+
 ---
 
 **Note**: This template eliminates redundancy by referencing centralized documentation instead of duplicating information. All file structure, naming conventions, and architectural details are maintained in their authoritative locations (`docs/CODEBASE_GUIDE.md`, `docs/CLAUDE.md`, etc.)

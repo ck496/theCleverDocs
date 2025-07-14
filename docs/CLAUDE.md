@@ -171,7 +171,33 @@ backend/tests/
 
 ### **Task Completion**
 Mark completed tasks in TASK.md immediately after finishing them.
-Add new sub-tasks or TODOs discovered during development to TASK.md under a “Discovered During Work” section.
+Add new sub-tasks or TODOs discovered during development to TASK.md under a "Discovered During Work" section.
+
+### **Feature Documentation Requirements**
+
+**MANDATORY for ALL PRP executions:**
+
+After completing any PRP (frontend, backend, or infrastructure), you MUST create a comprehensive feature implementation summary:
+
+1. **Create Feature Summary Document**:
+   - Use template from `docs/features/templates/[tier]-feature-summary.md`
+   - Save to `docs/features/implemented/[tier]/YYYY-MM-DD-feature-name-[tier].md`
+   - Include all phases, files changed, testing performed, and integration details
+
+2. **Required Documentation Elements**:
+   - **Implementation Details**: Complete phase breakdown with tasks and testing
+   - **Files Created/Modified**: Exact changes made to codebase
+   - **Testing & Validation**: All tests created, manual testing performed
+   - **Integration Points**: Dependencies, breaking changes, cross-component impact
+   - **Future Considerations**: Known limitations, planned enhancements, maintenance needs
+
+3. **Documentation Standards**:
+   - Link to original PRP and PRD references
+   - Include troubleshooting guide for common issues
+   - Document accessibility compliance (frontend features)
+   - Record performance considerations and optimizations
+
+**This documentation is NOT optional** - it enables knowledge transfer, debugging support, and maintenance planning for all CleverDocs features.
 
 ---
 

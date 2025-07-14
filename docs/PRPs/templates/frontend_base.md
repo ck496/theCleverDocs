@@ -368,6 +368,34 @@ export const AccessibleComponent: React.FC = () => {
 }
 ```
 
+## **MANDATORY: Feature Documentation**
+
+**🚨 CRITICAL REQUIREMENT**: Upon PRP completion, you MUST create a comprehensive feature implementation summary.
+
+### **Documentation Process**
+
+1. **Use Template**: Copy `docs/features/templates/frontend-feature-summary.md`
+2. **Create Summary**: Save as `docs/features/implemented/frontend/YYYY-MM-DD-feature-name-frontend.md`
+3. **Complete All Sections**:
+   - Implementation details with phase breakdown
+   - All files created/modified with specific changes
+   - Testing performed (component, integration, accessibility)
+   - Integration points and breaking changes
+   - Performance considerations and accessibility compliance
+   - Troubleshooting guide and future considerations
+
+### **Success Criteria**
+- [ ] **Feature Summary Created**: Comprehensive documentation following template
+- [ ] **All Phases Documented**: Each implementation phase with tasks and testing
+- [ ] **Files Catalogued**: Complete list of created/modified files with descriptions
+- [ ] **Testing Recorded**: All component, integration, and manual testing documented
+- [ ] **Integration Documented**: Dependencies, breaking changes, cross-component impact
+- [ ] **Accessibility Verified**: WCAG 2.1 AA compliance and testing methods recorded
+- [ ] **Performance Measured**: Optimizations and metrics documented
+- [ ] **Troubleshooting Added**: Common issues and solutions documented
+
+**The PRP is NOT considered complete until the feature documentation is created.**
+
 ---
 
 **Note**: This template eliminates redundancy by referencing centralized documentation instead of duplicating information. All component patterns, testing guidelines, and accessibility requirements are maintained in their authoritative locations.
