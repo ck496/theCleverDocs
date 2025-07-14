@@ -35,9 +35,27 @@
       "description": "Brief summary for blog cards and previews"
     },
     "content": {
-      "type": "string",
-      "minLength": 10,
-      "description": "Full blog content in markdown format"
+      "type": "object",
+      "required": ["beginner", "intermediate", "expert"],
+      "properties": {
+        "beginner": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Beginner-level content with simple explanations"
+        },
+        "intermediate": {
+          "type": "string", 
+          "minLength": 10,
+          "description": "Intermediate-level content with moderate complexity"
+        },
+        "expert": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Expert-level content with advanced concepts"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Blog content at different expertise levels"
     },
     "author": {
       "type": "object",
