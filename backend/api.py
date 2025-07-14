@@ -1,7 +1,9 @@
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 import logging
 import time
+import os
 
 from models.blog import BlogsResponse
 from services.blog_service import blog_service
@@ -17,6 +19,42 @@ app = FastAPI(
     title="CleverDocs Backend API",
     description="AI-powered onboarding and knowledge sharing platform API",
     version="1.0.0"
+)
+
+# Configure CORS - Environment-based for security
+ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
+
+if ENVIRONMENT == "development":
+    # Development: Allow local origins
+    allowed_origins = [
+        "http://localhost:5173",    # Vite dev server
+        "http://localhost:3000",    # React dev server
+        "http://127.0.0.1:5173",    # Alternative localhost
+        "http://127.0.0.1:3000"     # Alternative localhost
+    ]
+    allow_credentials = True
+    logger.info("CORS configured for development environment")
+else:
+    # Production: Restrict to actual domain
+    allowed_origins = [
+        os.getenv("FRONTEND_URL", "https://cleverdocs.app"),
+        # Add other production domains as needed
+    ]
+    allow_credentials = False  # More secure for production
+    logger.info(f"CORS configured for production environment: {allowed_origins}")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=allow_credentials,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=[
+        "Content-Type",
+        "Authorization", 
+        "Accept",
+        "Origin",
+        "X-Requested-With"
+    ],  # More restrictive than "*"
 )
 
 @app.get("/")
