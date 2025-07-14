@@ -52,9 +52,12 @@
 ```bash
 # Backend
 cd backend && python -c "import api; print('Backend imports successfully')"
+cd backend && python -m pytest tests/ -v  # Run all tests
+cd backend && python -m pytest tests/ --cov=app --cov-fail-under=90  # Check coverage
 
 # Frontend
 cd frontend && npm run build && npm run type-check
+cd frontend && npm test  # Run all tests
 
 # Infrastructure
 cd infra && terraform validate
@@ -71,6 +74,30 @@ cd infra && terraform validate
 - Community knowledge sharing
 - AI-powered content generation
 
+## 🧪 Testing Requirements
+
+### **Every Feature Must Have Tests**
+
+- **3 Tests Minimum** per feature/function:
+  1. Expected use case (happy path)
+  2. Edge case (boundary conditions, empty inputs)
+  3. Failure case (invalid inputs, errors)
+- **Test First** approach when fixing bugs
+- **Update Tests** when modifying existing code
+- **90% Coverage** for all new code
+
+### **Test Organization**
+
+```
+backend/tests/
+├── unit/           # Unit tests with mocked dependencies
+│   ├── services/   # Service layer tests
+│   └── models/     # Model validation tests
+├── integration/    # Integration tests with real services
+│   └── api/        # API endpoint tests
+└── performance/    # Performance benchmarks
+```
+
 ## 🧠 AI Behavior Rules
 
 ### **Work Style**
@@ -78,6 +105,7 @@ cd infra && terraform validate
 - **Focus on single tier** per implementation session
 - **Follow existing patterns** rather than inventing new approaches
 - **Start simple, then enhance** with validation at each step
+- **Write tests** for every new feature before marking complete
 - **Document assumptions** and next steps for other tiers
 
 ### **Communication**
@@ -93,6 +121,10 @@ cd infra && terraform validate
 - **Always implement fallbacks** for AI service failures
 - **Log structured data** for debugging
 - **Validate at every layer** (frontend + backend + infrastructure)
+
+### **Task Completion**
+Mark completed tasks in TASK.md immediately after finishing them.
+Add new sub-tasks or TODOs discovered during development to TASK.md under a “Discovered During Work” section.
 
 ---
 

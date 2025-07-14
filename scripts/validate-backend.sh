@@ -206,31 +206,54 @@ echo "-------------------------"
 
 # Run tests if they exist
 if [ -d "tests" ] && command -v pytest &> /dev/null; then
-    print_info "Running test suite..."
-    if pytest tests/ -v --tb=short >/dev/null 2>&1; then
-        print_status "Test execution"
+    print_info "Running unit tests..."
+    if pytest tests/unit/ -v --tb=short; then
+        print_status "Unit test execution"
     else
-        print_warning "Some tests failed"
+        print_warning "Some unit tests failed"
+    fi
+    
+    print_info "Running integration tests..."
+    if pytest tests/integration/ -v --tb=short; then
+        print_status "Integration test execution"
+    else
+        print_warning "Some integration tests failed"
     fi
     
     # Test coverage if pytest-cov available
     if python3 -c "import pytest_cov" 2>/dev/null; then
-        print_info "Calculating test coverage..."
-        coverage_output=$(pytest tests/ --cov=. --cov-report=term-missing --quiet 2>/dev/null | tail -1)
-        if [[ "$coverage_output" =~ ([0-9]+)% ]]; then
-            coverage_percent=${BASH_REMATCH[1]}
-            if [ "$coverage_percent" -ge 70 ]; then
-                print_status "Test coverage ($coverage_percent%)"
+        print_info "Calculating test coverage for new code..."
+        coverage_output=$(pytest tests/ --cov=app --cov-report=term-missing 2>&1)
+        echo "$coverage_output" | tail -10
+        
+        # Extract coverage percentage
+        if echo "$coverage_output" | grep -oE "TOTAL.*([0-9]+)%" | grep -oE "[0-9]+%" | head -1 | grep -oE "[0-9]+" > /tmp/coverage_percent.txt; then
+            coverage_percent=$(cat /tmp/coverage_percent.txt)
+            if [ "$coverage_percent" -ge 90 ]; then
+                print_status "Test coverage excellent ($coverage_percent%)"
+            elif [ "$coverage_percent" -ge 70 ]; then
+                print_warning "Test coverage good but aim for >90% ($coverage_percent%)"
             else
-                print_warning "Test coverage below 70% ($coverage_percent%)"
+                print_warning "Test coverage below target ($coverage_percent%) - aim for >90%"
             fi
+        fi
+        
+        # Check for 3-test pattern
+        print_info "Checking test patterns..."
+        test_count=$(find tests/unit -name "test_*.py" -exec grep -l "def test_" {} \; | wc -l)
+        if [ "$test_count" -gt 0 ]; then
+            print_status "Test files found ($test_count files)"
+            print_info "Remember: Each feature needs 3 tests (expected, edge case, failure)"
+        else
+            print_warning "No unit test files found"
         fi
     fi
 else
     if [ ! -d "tests" ]; then
-        print_warning "No tests directory found"
+        print_warning "No tests directory found - tests are REQUIRED for all features"
+        print_info "Create tests using: mkdir -p tests/unit tests/integration"
     else
-        print_warning "pytest not available - skipping tests"
+        print_warning "pytest not available - install with: pip install pytest pytest-cov"
     fi
 fi
 

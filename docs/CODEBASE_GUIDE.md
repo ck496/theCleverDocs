@@ -49,7 +49,7 @@ theCleverDocs/
 
 **Usage Commands**:
 ```bash
-/generate-backend-prp docs/backend/INITIAL_BACKEND.md    # Creates backend PRP
+/generate-backend-prp docs/backend/INITIAL_BACKEND_TEMPLATE.md   # Creates backend PRP
 /execute-backend-prp docs/PRPs/generated/backend/feature-name.md  # Implements feature
 /generate-frontend-prp docs/frontend/INITIAL_FRONTEND.md  # Creates frontend PRP
 /execute-frontend-prp docs/PRPs/generated/frontend/feature-name.md  # Implements feature

@@ -28,13 +28,13 @@ const BlogsCardGrid = ({ docType }: BlogsCardGridProps) => {
   const { blogs, loading } = useBlogs();
 
   // Debug logging
-  console.log("BlogsCardGrid - blogs:", blogs);
-  console.log("BlogsCardGrid - loading:", loading);
-  console.log("BlogsCardGrid - docType:", docType);
+  // console.log("BlogsCardGrid - blogs:", blogs);
+  // console.log("BlogsCardGrid - loading:", loading);
+  // console.log("BlogsCardGrid - docType:", docType);
 
   // Filter blogs based on docType
   const filteredBlogs = blogs.filter((blog) => blog.docType === docType);
-  console.log("BlogsCardGrid - filteredBlogs:", filteredBlogs);
+  // console.log("BlogsCardGrid - filteredBlogs:", filteredBlogs);
 
   const isOfficial = docType === "official";
 

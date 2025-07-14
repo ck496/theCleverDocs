@@ -47,8 +47,28 @@ description: |
 - [ ] **Documentation**: OpenAPI documentation auto-generated and accurate
 - [ ] **Performance**: Response times < 200ms for simple operations, < 2s for complex AI operations
 - [ ] **Security**: No credential exposure, proper input validation, HTTPS-ready
-- [ ] **Testing**: Unit tests and integration tests pass with >90% coverage
+- [ ] **Testing**: Unit tests (3 per feature: expected, edge case, failure) and integration tests pass with >90% coverage
 - [ ] **CleverDocs Alignment**: Feature demonstrably supports core mission and user workflows
+
+## Testing Requirements
+
+### **Every Feature MUST Have Tests**
+
+1. **Unit Tests** (backend/tests/unit/):
+   - One test for expected/happy path behavior
+   - One test for edge cases (empty input, boundary values)
+   - One test for failure cases (invalid input, service errors)
+   - Mock all external dependencies
+
+2. **Integration Tests** (backend/tests/integration/):
+   - Test full API request/response cycle
+   - Test with test database/services when applicable
+   - Verify error responses and status codes
+
+3. **Test Maintenance**:
+   - After updating any logic, check and update affected tests
+   - Tests must pass before marking feature complete
+   - Maintain >90% code coverage for new code
 
 ## Essential Context References
 
@@ -69,6 +89,9 @@ description: |
 - file: docs/development/CODING_STANDARDS.md
   section: "🐍 Backend Standards (FastAPI + Python)"
   why: Backend patterns, error handling, naming conventions
+
+- file: docs/development/TESTING.md
+  why: Comprehensive testing guidelines, 3-test pattern, coverage requirements
 
 - file: docs/PRDs/CleverDocsPRD.md
   why: Detailed business requirements and user goals
@@ -135,6 +158,48 @@ async def new_feature_endpoint(request: FeatureRequest) -> FeatureResponse:
 **Document your choice with rationale.**
 
 ## CleverDocs-Specific Implementation Patterns
+
+### **Testing Pattern Template**
+
+```python
+# Required testing pattern for every new feature
+# File: backend/tests/unit/services/test_[feature_name]_service.py
+
+import pytest
+from unittest.mock import Mock, patch
+from backend.app.services.[feature_name]_service import FeatureService
+
+class TestFeatureService:
+    """Test suite for [FeatureName]Service."""
+    
+    @pytest.fixture
+    def service(self):
+        """Create service instance with mocked dependencies."""
+        return FeatureService()
+    
+    # Test 1: Expected use case
+    async def test_process_valid_request_returns_success(self, service):
+        # Arrange
+        valid_data = {...}  # Valid input data
+        expected_result = {...}  # Expected output
+        
+        # Act
+        result = await service.process_request(valid_data)
+        
+        # Assert
+        assert result == expected_result
+    
+    # Test 2: Edge case
+    async def test_process_empty_input_returns_default(self, service):
+        # Test boundary conditions, empty inputs, maximum values, etc.
+        pass
+    
+    # Test 3: Failure case
+    async def test_process_invalid_input_raises_error(self, service):
+        # Test error handling, invalid inputs, service failures
+        with pytest.raises(ValueError):
+            await service.process_request(invalid_data)
+```
 
 ### **Error Handling Template**
 
@@ -219,22 +284,60 @@ CREATE backend/app/services/[feature_name]_service.py:
 python -c "from backend.app.services.[feature_name]_service import *; print('Service imports successfully')"
 ```
 
-### **Phase 4: Integration Testing**
+### **Phase 4: Comprehensive Testing**
 
 ```bash
-# Task 4.1: Create comprehensive tests
-CREATE backend/tests/api/test_[feature_name].py:
-- Unit tests for service layer
-- Integration tests for API endpoints
-- Performance tests for response times
+# Task 4.1: Create unit tests for services
+CREATE backend/tests/unit/services/test_[feature_name]_service.py:
+- Test expected use cases (happy path)
+- Test edge cases (boundary conditions, empty inputs)
+- Test failure cases (invalid inputs, service errors)
+- Mock external dependencies (AWS services, APIs)
+
+# Task 4.2: Create integration tests for API endpoints
+CREATE backend/tests/integration/api/test_[feature_name].py:
+- Test full request/response cycle
+- Test authentication and authorization
+- Test error handling and status codes
+- Test with real test database (if applicable)
+
+# Task 4.3: Update existing tests affected by new feature
+UPDATE backend/tests/**/*.py:
+- Review and update any existing tests that may be affected
+- Ensure all tests still pass after feature implementation
 
 # Validation Commands:
 cd backend
-python -m pytest tests/api/test_[feature_name].py -v
-python -m pytest tests/api/test_[feature_name].py --cov=app --cov-report=term-missing
+# Run unit tests
+python -m pytest tests/unit/services/test_[feature_name]_service.py -v
+# Run integration tests
+python -m pytest tests/integration/api/test_[feature_name].py -v
+# Run all tests with coverage
+python -m pytest tests/ --cov=app --cov-report=term-missing --cov-fail-under=90
+# Run only the new feature tests
+python -m pytest tests/ -k "[feature_name]" -v
 ```
 
-### **Phase 5: Performance & Security Validation**
+### **Phase 5: Test-Driven Refinement**
+
+```bash
+# Task 5.1: Ensure test quality
+# Check test coverage for new code
+python -m pytest tests/ --cov=app/services/[feature_name]_service --cov=app/api/[feature_name] --cov-report=term-missing
+
+# Run mutation testing to verify test effectiveness
+python -m mutmut run --paths-to-mutate=backend/app/services/[feature_name]_service.py
+
+# Task 5.2: Performance testing
+CREATE backend/tests/performance/test_[feature_name]_performance.py:
+- Benchmark response times
+- Test under load conditions
+- Verify performance requirements met
+
+python -m pytest tests/performance/test_[feature_name]_performance.py --benchmark-only
+```
+
+### **Phase 6: Performance & Security Validation**
 
 ```bash
 # Performance validation
@@ -287,12 +390,16 @@ locust -f tests/load/test_[feature_name]_load.py --host=http://localhost:8000
 
 ```bash
 # Code formatting
-python -m black backend/app/ --check
-python -m isort backend/app/ --check-only
+python -m black backend/ --check
+python -m isort backend/ --check-only
 
 # Linting
-python -m flake8 backend/app/
+python -m flake8 backend/
 python -m pylint backend/app/
+
+# Test code quality
+python -m flake8 backend/tests/
+python -m black backend/tests/ --check
 ```
 
 ### **Security Validation**
@@ -315,7 +422,7 @@ Before marking this backend feature as complete, verify:
 - [ ] **Mission Alignment**: Feature demonstrably supports CleverDocs' core goal of accelerating engineer onboarding
 - [ ] **Performance**: All response times meet requirements (< 200ms simple, < 2s complex)
 - [ ] **Security**: No security vulnerabilities detected, all inputs validated
-- [ ] **Quality**: Code coverage >90%, all linting passes
+- [ ] **Quality**: Code coverage >90%, all linting passes, all tests follow 3-test pattern
 - [ ] **Integration**: API contracts defined and tested for frontend consumption
 - [ ] **Documentation**: OpenAPI docs accurate and comprehensive
 - [ ] **Error Handling**: All error scenarios handled gracefully with user-friendly messages
