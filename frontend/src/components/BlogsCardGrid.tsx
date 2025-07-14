@@ -49,6 +49,9 @@ const BlogsCardGrid = ({ docType }: BlogsCardGridProps) => {
   );
   const textColor = useColorModeValue("gray.600", "gray.400");
   const headingColor = useColorModeValue("gray.800", "white");
+  
+  // Team name color for official blogs (moved here to follow Rules of Hooks)
+  const teamNameColor = useColorModeValue("orange.600", "orange.300");
 
   // Show loading state
   if (loading) {
@@ -180,7 +183,7 @@ const BlogsCardGrid = ({ docType }: BlogsCardGridProps) => {
                       <Text
                         fontSize="sm"
                         fontWeight="bold"
-                        color={useColorModeValue("orange.600", "orange.300")}
+                        color={teamNameColor}
                       >
                         {blog.teamInfo?.teamName}
                       </Text>
