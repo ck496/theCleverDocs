@@ -8,6 +8,11 @@ Execute backend features that support CleverDocs' core mission: **accelerating e
 
 ## Instructions
 
+**CRITICAL: Follow CleverDocs Planning Protocol**
+1. **Present the plan first** - Show all tasks and subtasks before starting
+2. **Ask for permission** - Wait for approval before proceeding  
+3. **Execute step by step** - Work through approved tasks systematically
+
 Read the PRP file ($ARGUMENTS) thoroughly and implement the feature following CleverDocs' established patterns and validation loops.
 
 ### Step 1: Context Validation & Understanding

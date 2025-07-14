@@ -509,6 +509,70 @@ def test_endpoint_load_handling():
 
 ## ⚛️ Frontend Standards (React + TypeScript + Chakra UI)
 
+### **CleverDocs Frontend Rules**
+
+1. **Use Chakra UI Components** - Don't reinvent the wheel
+   ```tsx
+   // ✅ Good: Use Chakra UI components
+   import { Box, Button, Stack, Text, Heading } from '@chakra-ui/react'
+   
+   // ❌ Bad: Custom styled components when Chakra components exist
+   import styled from 'styled-components'
+   const StyledDiv = styled.div`...`
+   ```
+
+2. **Create Reusable Components** - Keep pages clean and focused
+   ```tsx
+   // ✅ Good: Reusable component in components/
+   // components/BlogCard.tsx
+   export const BlogCard = ({ blog }: BlogCardProps) => { ... }
+   
+   // pages/BlogsGrid.tsx
+   import { BlogCard } from '@/components/BlogCard'
+   
+   // ❌ Bad: Everything in one large page file (500+ lines)
+   ```
+
+3. **Follow Current File Structure**
+   ```
+   frontend/src/
+   ├── components/     # Reusable UI components
+   ├── pages/         # Page components (use components, don't bloat)
+   ├── hooks/         # Custom React hooks
+   ├── api/           # API client and services
+   ├── types/         # TypeScript type definitions
+   └── data/          # Static data and constants
+   ```
+
+4. **Component Best Practices**
+   - One component per file
+   - Keep components under 200 lines
+   - Extract complex logic to custom hooks
+   - Use TypeScript interfaces for all props
+   - Co-locate test files with components
+
+5. **Page Component Pattern**
+   ```tsx
+   // ✅ Good: Page assembles components
+   export const BlogsGridPage = () => {
+     const { blogs, loading, error } = useBlogs()
+     
+     return (
+       <Container maxW="container.xl">
+         <PageHeader title="Blogs" />
+         <FilterBar onFilter={handleFilter} />
+         {loading ? (
+           <LoadingGrid />
+         ) : error ? (
+           <ErrorMessage error={error} />
+         ) : (
+           <BlogGrid blogs={blogs} />
+         )}
+       </Container>
+     )
+   }
+   ```
+
 ### **Component Architecture**
 
 **Standard Component Pattern**:

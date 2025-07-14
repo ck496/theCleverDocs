@@ -1,12 +1,17 @@
-# CleverDocs Backend Feature Request: Upload Blog API Endpoint
+# CleverDocs Backend Feature Request: [FEATURE_NAME]
 
+> **Instructions**: Copy this template to create feature-specific INITIAL files
+>
+> ```bash
+> cp docs/backend/INITIAL_BACKEND_TEMPLATE.md docs/backend/INITIAL_[feature_name].md
+> vim docs/backend/INITIAL_[feature_name].md  # Fill in [BRACKETED] sections
+> ```
 
 ## FEATURE:
 
-Build a **Upload Blog API Endpoint** thatcreates the backend end point for the  **Note → Blog Generation feature** to support CleverDocs' knowledge sharing mission.
+Build a [SPECIFIC_FUNCTIONALITY] that [BUSINESS_VALUE_DESCRIPTION] to support CleverDocs' knowledge sharing mission.
 
 **Core Functionality:**
-
 
 - [MAIN_ENDPOINT_OR_SERVICE]: [DESCRIPTION]
 - [SECONDARY_FUNCTIONALITY]: [DESCRIPTION]
@@ -15,7 +20,6 @@ Build a **Upload Blog API Endpoint** thatcreates the backend end point for the  
 - Include proper error handling and validation
 - Auto-generate OpenAPI documentation
 - [SPECIFIC_COMPATIBILITY_REQUIREMENTS]
-
 
 **Business Value:**
 This [FEATURE_TYPE] enables [USER_BENEFIT] and directly supports CleverDocs' mission of accelerating engineer onboarding through [SPECIFIC_MISSION_ALIGNMENT].

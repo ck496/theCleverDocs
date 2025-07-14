@@ -7,6 +7,11 @@ Create backend features that support CleverDocs' core mission: **accelerating en
 
 ## Instructions
 
+**CRITICAL: Follow CleverDocs Planning Protocol**
+1. **Present the plan first** - Show all tasks and subtasks before starting
+2. **Ask for permission** - Wait for approval before proceeding  
+3. **Execute step by step** - Work through approved tasks systematically
+
 Read the backend feature request file ($ARGUMENTS) first to understand what needs to be built. The feature must support CleverDocs' note→blog transformation, multi-level content generation, or community knowledge sharing capabilities.
 
 ### Step 1: Research Phase - Understand the Context

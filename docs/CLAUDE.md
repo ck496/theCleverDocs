@@ -48,8 +48,12 @@ backend/app/
 ### **Frontend**: React + TypeScript + Vite + Chakra UI
 
 - Current: `frontend/src/pages/HomePage.tsx` ✅
-- Use Chakra UI exclusively (NOT ShadCN, even though it exists)
+- **MUST use Chakra UI components** - don't create custom styled components
+- **MUST create reusable components** in `frontend/src/components/`
+- **MUST keep page files clean** - pages should assemble components, not implement everything
+- **File structure**: components/ for reusable UI, pages/ for route components, hooks/ for logic
 - Always implement loading states and error handling
+- Keep components under 200 lines - extract to smaller components or hooks
 
 ### **Infrastructure**: Terraform + AWS Provider
 
@@ -118,6 +122,29 @@ backend/tests/
 
 ## 🧠 AI Behavior Rules
 
+### **Planning and Permission Protocol**
+
+**ALWAYS follow this sequence for ANY request:**
+
+1. **Present the Plan First** - Show tasks and subtasks before starting
+2. **Ask for Permission** - Wait for approval before proceeding
+3. **Execute Step by Step** - Work through approved tasks systematically
+
+**Plan Format:**
+```
+## Plan of Action
+
+### Task 1: [Task Name]
+- Subtask 1.1: [Specific action]
+- Subtask 1.2: [Specific action]
+
+### Task 2: [Task Name]  
+- Subtask 2.1: [Specific action]
+- Subtask 2.2: [Specific action]
+
+**Proceed with this plan? (y/n)**
+```
+
 ### **Work Style**
 
 - **Focus on single tier** per implementation session
@@ -128,10 +155,12 @@ backend/tests/
 
 ### **Communication**
 
+- **ALWAYS present plan first** - Never start implementation without showing the plan
 - **Be explicit** about current vs planned structure when explaining
 - **Reference specific files** when discussing existing code
 - **Ask questions** when requirements are unclear
 - **Provide validation steps** for testing implementations
+- **Wait for permission** before proceeding with any file changes or implementations
 
 ### **Error Handling**
 
