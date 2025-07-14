@@ -171,6 +171,85 @@ async def upload_file_to_s3(file_content: bytes, key: str, bucket: str) -> str:
         raise AIServiceError("File upload failed")
 ```
 
+### **File Organization & Modularity**
+
+**Critical Rule**: Never put models, services, and API routes in one file.
+
+**File Size Limit**: Maximum 500 lines per file - split into modules when approaching limit.
+
+**Separation of Concerns**:
+
+```python
+# ❌ BAD - Everything in api.py
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+class BlogModel(BaseModel):  # Models mixed with routes
+    title: str
+
+class BlogService:  # Services mixed with routes
+    def create_blog(self): pass
+
+app = FastAPI()
+
+@app.post("/blogs")  # Routes mixed with everything
+async def create_blog(): pass
+
+# ✅ GOOD - Proper separation
+# models/blog.py
+from pydantic import BaseModel
+
+class BlogRequest(BaseModel):
+    title: str
+    content: str
+
+# services/blog_service.py  
+class BlogService:
+    async def create_blog(self, data: BlogRequest):
+        # Business logic only
+        pass
+
+# api/blogs.py
+from fastapi import APIRouter
+from models.blog import BlogRequest
+from services.blog_service import BlogService
+
+router = APIRouter()
+
+@router.post("/blogs")
+async def create_blog(request: BlogRequest):
+    # Route handling only
+    service = BlogService()
+    return await service.create_blog(request)
+```
+
+**Directory Structure**:
+```
+backend/app/
+├── models/          # Pydantic models only
+│   ├── __init__.py
+│   ├── blog.py      # BlogRequest, BlogResponse models
+│   ├── user.py      # UserProfile, UserSettings models  
+│   ├── document.py  # DocumentUpload, DocumentMetadata models
+│   └── auth.py      # LoginRequest, TokenResponse models
+├── services/        # Business logic only
+│   ├── __init__.py
+│   ├── blog_service.py        # Blog CRUD and business logic
+│   ├── user_service.py        # User management logic
+│   ├── auth_service.py        # Authentication & authorization logic
+│   └── ai_transform_service.py # AI content transformation logic
+├── api/            # Route handlers only
+│   ├── __init__.py
+│   ├── blogs.py     # /api/blogs endpoints
+│   ├── users.py     # /api/users endpoints
+│   ├── auth.py      # /api/auth endpoints
+│   └── transform.py # /api/transform endpoints
+└── utils/          # Shared utilities
+    ├── __init__.py
+    ├── helpers.py   # Common utility functions
+    └── validators.py # Custom validation functions
+```
+
 ### **Validation Patterns**
 
 **Input Validation with Pydantic**:

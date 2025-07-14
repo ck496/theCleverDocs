@@ -135,25 +135,42 @@ description: |
 
 ### **Structural Strategy** (Choose based on feature complexity)
 
-**Option A: Extend Current Structure** (Simple features)
+**Option A: Extend Current Structure** (Simple features only)
 
 ```python
 # Extend backend/api.py directly
-# Use for: Single endpoint, minimal business logic, MVP speed
-# Pattern: Add routes to existing FastAPI app
+# Use ONLY for: Single endpoint, minimal business logic, quick MVP
+# ⚠️  MUST separate into proper structure if feature grows beyond basic CRUD
 
 @app.post("/api/new-feature")
 async def new_feature_endpoint(request: FeatureRequest) -> FeatureResponse:
     # Implementation here
 ```
 
-**Option B: Migrate to Full Structure** (Complex features)
+**Option B: Proper Modular Structure** (Recommended for most features)
 
 ```bash
 # Implement planned backend/app/ structure
-# Use for: Multiple endpoints, AWS integration, complex business logic
-# See: docs/CODEBASE_GUIDE.md "Target Backend Structure (🔄 Migration Plan)"
+# Use for: Multiple endpoints, business logic, any long-term feature
+# CRITICAL: Never put models, services, and routes in same file
+
+backend/app/
+├── models/
+│   ├── blog.py                # BlogRequest, BlogResponse models  
+│   ├── user.py                # UserProfile, UserSettings models
+│   └── document.py            # DocumentUpload, DocumentMetadata models
+├── services/
+│   ├── blog_service.py        # Blog business logic
+│   ├── user_service.py        # User management logic
+│   └── ai_transform_service.py # AI transformation logic
+├── api/
+│   ├── blogs.py              # /api/blogs endpoints
+│   ├── users.py              # /api/users endpoints  
+│   └── transform.py          # /api/transform endpoints
+└── utils/                    # Shared utilities
 ```
+
+**File Size Rule**: Max 500 lines per file - split when approaching limit.
 
 **Document your choice with rationale.**
 

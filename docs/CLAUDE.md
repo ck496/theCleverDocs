@@ -26,6 +26,24 @@
 - Current: `backend/api.py` ✅ | Planned: `backend/app/` structure 🔄
 - Always use async/await for I/O operations
 - Validate ALL inputs with Pydantic models
+- **NEVER put models, services, and API routes in one file** - always separate concerns
+
+## 🧱 Code Structure & Modularity
+
+### **File Organization Rules**
+
+- **Max 500 lines per file** - if approaching limit, split into modules
+- **Separate by responsibility** - models, services, API routes in different files
+- **Group by feature** - related functionality stays together
+
+### **Backend Structure Pattern**
+```
+backend/app/
+├── models/          # Pydantic models only
+├── services/        # Business logic only  
+├── api/            # Route handlers only
+└── utils/          # Shared utilities
+```
 
 ### **Frontend**: React + TypeScript + Vite + Chakra UI
 

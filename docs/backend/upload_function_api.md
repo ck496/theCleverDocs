@@ -8,12 +8,14 @@ Build a **Upload Blog API Endpoint** thatcreates the backend end point for the  
 **Core Functionality:**
 
 
-- **POST /blogs endpoint**: Return all blogs from shared/data/blogs.json
-- **Response formatting**: Structured JSON with proper HTTP status codes
-- **Data validation**: Use Pydantic models matching the existing blog schema
-- **Error handling**: Comprehensive error responses with user-friendly messages
+- [MAIN_ENDPOINT_OR_SERVICE]: [DESCRIPTION]
+- [SECONDARY_FUNCTIONALITY]: [DESCRIPTION]
+- [DATA_INTEGRATION]: [shared/data source OR database integration]
+- [FILTERING_OR_PROCESSING]: [query parameters, business logic]
+- Include proper error handling and validation
 - Auto-generate OpenAPI documentation
-- **Compatibility**: Must match existing frontend Blog interface expectations
+- [SPECIFIC_COMPATIBILITY_REQUIREMENTS]
+
 
 **Business Value:**
 This [FEATURE_TYPE] enables [USER_BENEFIT] and directly supports CleverDocs' mission of accelerating engineer onboarding through [SPECIFIC_MISSION_ALIGNMENT].
