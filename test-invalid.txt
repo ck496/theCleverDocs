@@ -1,0 +1,2 @@
+This is a text file, not markdown.
+It should be rejected by the file validation.
