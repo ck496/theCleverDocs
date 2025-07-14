@@ -14,11 +14,17 @@
     },
     "publishedAt": "2024-01-15",
     "readTime": "12 min read",
-    "tags": ["Kubernetes", "DevOps", "Deployment", "CI/CD"],
+    "tags": [
+      "Kubernetes",
+      "DevOps",
+      "Deployment",
+      "CI/CD"
+    ],
     "coverImage": "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80",
     "avgRating": 4.5,
     "totalRatings": 127,
-    "docType": "community"
+    "docType": "community",
+    "teamInfo": null
   },
   {
     "id": "2",
@@ -35,11 +41,17 @@
     },
     "publishedAt": "2024-01-20",
     "readTime": "8 min read",
-    "tags": ["AWS", "Cost Optimization", "Cloud", "FinOps"],
+    "tags": [
+      "AWS",
+      "Cost Optimization",
+      "Cloud",
+      "FinOps"
+    ],
     "coverImage": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
     "avgRating": 4.2,
     "totalRatings": 89,
-    "docType": "community"
+    "docType": "community",
+    "teamInfo": null
   },
   {
     "id": "3",
@@ -56,18 +68,24 @@
     },
     "publishedAt": "2024-01-25",
     "readTime": "15 min read",
-    "tags": ["React", "Performance", "JavaScript", "Frontend"],
+    "tags": [
+      "React",
+      "Performance",
+      "JavaScript",
+      "Frontend"
+    ],
     "coverImage": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80",
     "avgRating": 4.7,
     "totalRatings": 203,
-    "docType": "community"
+    "docType": "community",
+    "teamInfo": null
   },
   {
     "id": "4",
-    "title": "Company API Standards and Guidelines", 
+    "title": "Company API Standards and Guidelines",
     "excerpt": "Official documentation for CleverDocs API design patterns, authentication protocols, and development standards for all engineering teams.",
     "content": {
-      "beginner": "# Company API Standards: Getting Started\n\nAPIs are how different parts of our software talk to each other. Here are the basic rules everyone should follow.\n\n## What is an API?\n\nAn API (Application Programming Interface) is like a waiter in a restaurant:\n- You (the client) ask for something\n- The waiter (API) takes your request to the kitchen (server)\n- The kitchen makes your food (processes the request)\n- The waiter brings back your order (returns the response)\n\n## Basic Rules\n\n### 1. Use Clear URLs\n\n```\n✅ Good:\nGET /api/users          (get all users)\nGET /api/users/123      (get user 123)\nPOST /api/users         (create new user)\n\n❌ Bad:\nGET /api/getAllUsers\nGET /api/user?id=123\n```\n\n### 2. Return Helpful Errors\n\nWhen something goes wrong, explain what happened:\n\n```json\n{\n  \"error\": \"User not found\",\n  \"message\": \"No user exists with ID 123\"\n}\n```\n\n### 3. Use Standard Status Codes\n\n- 200: Success\n- 400: Bad request (client error)\n- 404: Not found\n- 500: Server error\n\n## Getting Help\n\n- Ask your team lead if you're unsure\n- Check existing APIs for examples\n- Contact the API Architecture team for complex questions",
+      "beginner": "# Company API Standards: Getting Started\n\nAPIs are how different parts of our software talk to each other. Here are the basic rules everyone should follow.\n\n## What is an API?\n\nAn API (Application Programming Interface) is like a waiter in a restaurant:\n- You (the client) ask for something\n- The waiter (API) takes your request to the kitchen (server)\n- The kitchen makes your food (processes the request)\n- The waiter brings back your order (returns the response)\n\n## Basic Rules\n\n### 1. Use Clear URLs\n\n```\n\u2705 Good:\nGET /api/users          (get all users)\nGET /api/users/123      (get user 123)\nPOST /api/users         (create new user)\n\n\u274c Bad:\nGET /api/getAllUsers\nGET /api/user?id=123\n```\n\n### 2. Return Helpful Errors\n\nWhen something goes wrong, explain what happened:\n\n```json\n{\n  \"error\": \"User not found\",\n  \"message\": \"No user exists with ID 123\"\n}\n```\n\n### 3. Use Standard Status Codes\n\n- 200: Success\n- 400: Bad request (client error)\n- 404: Not found\n- 500: Server error\n\n## Getting Help\n\n- Ask your team lead if you're unsure\n- Check existing APIs for examples\n- Contact the API Architecture team for complex questions",
       "intermediate": "# Company API Standards and Guidelines\n\nThis document outlines the official API standards for all CleverDocs engineering teams.\n\n## API Design Principles\n\n### 1. RESTful Design\n\nAll APIs must follow REST conventions:\n\n- Use HTTP methods appropriately (GET, POST, PUT, DELETE)\n- Use noun-based resource URLs\n- Return appropriate HTTP status codes\n- Use consistent response formats\n\n### 2. Authentication\n\nAll APIs must implement OAuth 2.0 with JWT tokens:\n\n```javascript\n// Example authorization header\nAuthorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\n```\n\n### 3. Error Handling\n\nStandardized error response format:\n\n```json\n{\n  \"error\": {\n    \"code\": \"INVALID_REQUEST\",\n    \"message\": \"The request parameters are invalid\",\n    \"details\": [\n      {\n        \"field\": \"email\",\n        \"issue\": \"Invalid email format\"\n      }\n    ]\n  }\n}\n```\n\n## Rate Limiting\n\nAll public APIs must implement rate limiting:\n\n- 1000 requests per hour for authenticated users\n- 100 requests per hour for unauthenticated users\n- Include rate limit headers in responses\n\n## Documentation Requirements\n\n- OpenAPI 3.0 specifications required\n- Interactive documentation with examples\n- SDK generation support\n- Changelog maintenance\n\n## Security Requirements\n\n- HTTPS only for all endpoints\n- Input validation and sanitization\n- SQL injection protection\n- XSS prevention measures\n\n## Versioning Strategy\n\n- Use semantic versioning (v1, v2, etc.)\n- Maintain backward compatibility when possible\n- Deprecation notices 6 months before removal\n\nFor questions or clarifications, contact the API Architecture team.",
       "expert": "# Enterprise API Standards: Advanced Governance & Architecture\n\nComprehensive API governance framework for CleverDocs with advanced patterns, security models, and enterprise-grade compliance requirements.\n\n## Advanced API Architecture Patterns\n\n### GraphQL Federation\n\n```graphql\ntype User @key(fields: \"id\") {\n  id: ID!\n  name: String!\n  posts: [Post!]! @requires(fields: \"id\")\n}\n\ntype Post @key(fields: \"id\") {\n  id: ID!\n  title: String!\n  author: User! @provides(fields: \"name\")\n}\n```\n\n### Event-Driven Architecture\n\n```yaml\napiVersion: v1\nkind: AsyncAPI\nspec:\n  info:\n    title: CleverDocs Event API\n    version: '2.0.0'\n  channels:\n    user/signup:\n      subscribe:\n        message:\n          $ref: '#/components/messages/UserSignup'\n      publish:\n        message:\n          $ref: '#/components/messages/WelcomeEmail'\n```\n\n## Advanced Security Framework\n\n### Zero Trust API Security\n\n```python\nclass ZeroTrustMiddleware:\n    def __init__(self):\n        self.policy_engine = PolicyEngine()\n        self.risk_assessor = RiskAssessment()\n    \n    async def __call__(self, request, call_next):\n        # Continuous verification\n        auth_context = await self.verify_identity(request)\n        device_trust = await self.assess_device(request)\n        behavioral_score = await self.analyze_behavior(request, auth_context)\n        \n        risk_score = self.risk_assessor.calculate(\n            auth_context, device_trust, behavioral_score\n        )\n        \n        if risk_score > RISK_THRESHOLD:\n            return await self.trigger_step_up_auth(request)\n        \n        # Apply fine-grained policies\n        policies = await self.policy_engine.get_policies(\n            user=auth_context.user,\n            resource=request.path,\n            context={\n                'time': datetime.now(),\n                'location': request.headers.get('X-User-Location'),\n                'risk_score': risk_score\n            }\n        )\n        \n        request.state.policies = policies\n        response = await call_next(request)\n        \n        # Post-request audit\n        await self.audit_access(request, response, policies)\n        return response\n```\n\n### Advanced Rate Limiting\n\n```python\nclass AdaptiveRateLimiter:\n    def __init__(self):\n        self.redis = Redis()\n        self.ml_model = load_model('rate_limit_predictor')\n    \n    async def get_rate_limit(self, user_id: str, endpoint: str) -> RateLimit:\n        # Historical usage patterns\n        usage_history = await self.get_usage_history(user_id, endpoint)\n        \n        # Current system load\n        system_load = await self.get_system_metrics()\n        \n        # User tier and subscription\n        user_tier = await self.get_user_tier(user_id)\n        \n        # ML-based prediction\n        predicted_usage = self.ml_model.predict([\n            usage_history, system_load, user_tier\n        ])\n        \n        # Dynamic rate limit calculation\n        base_limit = TIER_LIMITS[user_tier]\n        load_factor = 1.0 - (system_load / 100)\n        behavioral_factor = min(1.5, predicted_usage / base_limit)\n        \n        adaptive_limit = int(base_limit * load_factor * behavioral_factor)\n        \n        return RateLimit(\n            requests=adaptive_limit,\n            window=WINDOW_SIZE,\n            burst_allowance=adaptive_limit * 0.2\n        )\n```\n\n## API Observability & Analytics\n\n### Distributed Tracing\n\n```python\nfrom opentelemetry import trace\nfrom opentelemetry.exporter.jaeger.thrift import JaegerExporter\n\ntracer = trace.get_tracer(__name__)\n\n@tracer.start_as_current_span(\"api_request\")\nasync def process_request(request: Request):\n    span = trace.get_current_span()\n    span.set_attributes({\n        \"http.method\": request.method,\n        \"http.url\": str(request.url),\n        \"user.id\": request.state.user_id,\n        \"api.version\": request.headers.get(\"X-API-Version\"),\n    })\n    \n    with tracer.start_as_current_span(\"validate_request\") as validate_span:\n        validation_result = await validate_request(request)\n        validate_span.set_attribute(\"validation.passed\", validation_result.valid)\n    \n    with tracer.start_as_current_span(\"business_logic\") as business_span:\n        result = await execute_business_logic(request)\n        business_span.set_attributes({\n            \"business.operation\": result.operation,\n            \"business.duration_ms\": result.duration,\n        })\n    \n    return result\n```\n\n### API Analytics Framework\n\n```python\nclass APIAnalytics:\n    def __init__(self):\n        self.metrics_collector = MetricsCollector()\n        self.event_processor = EventProcessor()\n    \n    async def track_api_usage(self, request, response, duration):\n        event = APIEvent(\n            timestamp=datetime.utcnow(),\n            method=request.method,\n            endpoint=request.url.path,\n            status_code=response.status_code,\n            duration_ms=duration,\n            user_id=getattr(request.state, 'user_id', None),\n            api_version=request.headers.get('X-API-Version'),\n            client_id=request.headers.get('X-Client-ID'),\n            request_size=len(await request.body()),\n            response_size=len(response.body),\n            error_type=getattr(response, 'error_type', None)\n        )\n        \n        # Real-time metrics\n        await self.metrics_collector.increment(\n            'api.requests.total',\n            tags={\n                'method': event.method,\n                'endpoint': event.endpoint,\n                'status': event.status_code\n            }\n        )\n        \n        await self.metrics_collector.histogram(\n            'api.request.duration',\n            event.duration_ms,\n            tags={'endpoint': event.endpoint}\n        )\n        \n        # Event streaming for analytics\n        await self.event_processor.publish(event)\n```\n\n## API Governance & Compliance\n\n### Automated API Governance\n\n```yaml\napiVersion: governance.cleverdocs.com/v1\nkind: APIPolicy\nmetadata:\n  name: security-standards\nspec:\n  rules:\n    - name: require-authentication\n      description: All endpoints must require authentication\n      severity: error\n      rule: |\n        every endpoint in spec.paths\n        requires security != null\n    \n    - name: rate-limiting\n      description: Public endpoints must have rate limiting\n      severity: warning\n      rule: |\n        every endpoint in spec.paths where security == null\n        requires extensions[\"x-rate-limit\"] != null\n    \n    - name: input-validation\n      description: All request bodies must have validation schemas\n      severity: error\n      rule: |\n        every operation with requestBody\n        requires requestBody.content.*.schema.properties != null\n```\n\n## Advanced Testing Strategies\n\n### Contract Testing with Pact\n\n```python\nfrom pact import Consumer, Provider\n\n# Consumer test\npact = Consumer('frontend-app').has_pact_with(Provider('user-api'))\n\npact.given('user 123 exists').upon_receiving(\n    'a request for user 123'\n).with_request(\n    method='GET',\n    path='/api/users/123',\n    headers={'Authorization': Matcher.regex(r'Bearer .+')}\n).will_respond_with(\n    status=200,\n    headers={'Content-Type': 'application/json'},\n    body={\n        'id': Matcher.integer(123),\n        'name': Matcher.string('John Doe'),\n        'email': Matcher.regex(r'.+@.+\\..+')\n    }\n)\n\n# Provider verification\n@pytest.fixture\ndef provider_config():\n    return {\n        'provider': 'user-api',\n        'pact_dir': './pacts',\n        'provider_base_url': 'http://localhost:8000',\n        'broker_url': 'http://pact-broker.internal'\n    }\n```\n\nFor advanced architectural decisions and enterprise patterns, consult the API Architecture Council."
     },
@@ -77,9 +95,14 @@
     },
     "publishedAt": "2024-02-01",
     "readTime": "10 min read",
-    "tags": ["API", "Standards", "Documentation", "Security"],
+    "tags": [
+      "API",
+      "Standards",
+      "Documentation",
+      "Security"
+    ],
     "coverImage": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80",
-    "avgRating": 0,
+    "avgRating": 0.0,
     "totalRatings": 0,
     "docType": "official",
     "teamInfo": {
@@ -102,11 +125,17 @@
     },
     "publishedAt": "2024-02-05",
     "readTime": "18 min read",
-    "tags": ["Database", "Migration", "DevOps", "PostgreSQL"],
+    "tags": [
+      "Database",
+      "Migration",
+      "DevOps",
+      "PostgreSQL"
+    ],
     "coverImage": "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&q=80",
     "avgRating": 4.3,
     "totalRatings": 156,
-    "docType": "community"
+    "docType": "community",
+    "teamInfo": null
   },
   {
     "id": "6",
@@ -123,14 +152,565 @@
     },
     "publishedAt": "2024-02-10",
     "readTime": "25 min read",
-    "tags": ["Security", "Incident Response", "Procedures", "Compliance"],
+    "tags": [
+      "Security",
+      "Incident Response",
+      "Procedures",
+      "Compliance"
+    ],
     "coverImage": "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80",
-    "avgRating": 0,
+    "avgRating": 0.0,
     "totalRatings": 0,
     "docType": "official",
     "teamInfo": {
       "teamName": "Security Operations",
       "email": "security@cleverdocs.com"
     }
+  },
+  {
+    "id": "9c1a4ff5-2ebf-4840-af83-6cbb8e089851",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "f1a9007a-f925-4736-b681-3f2b0066540c",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "8831ed55-272c-4120-ae23-4f7616694310",
+    "title": "Advanced Python Tutorial",
+    "excerpt": " Advanced Python Tutorial",
+    "content": {
+      "beginner": "# Advanced Python Tutorial - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Advanced Python Tutorial\n## Table of Contents\n1. [Introduction](#introduction)\n2. [Advanced Concepts](#advanced-concepts)\n3. [Code Examples](#code-examples)\n## Introduction\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Advanced Python Tutorial - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Advanced Python Tutorial\n\n## Table of Contents\n\n1. [Introduction](#introduction)\n2. [Advanced Concepts](#advanced-concepts)\n3. [Code Examples](#code-examples)\n\n## Introduction\n\nThis is an advanced tutorial covering multiple concepts.\n\n### Prerequisites\n\n- Python 3.8+\n- Basic understanding of OOP\n\n## Advanced Concepts\n\n### Decorators\n\n```python\ndef timing_decorator(func):\n    import time\n    def wrapper(*args, **kwargs):\n        start = time.time()\n        result = func(*args, **kwargs)\n        end = time.time()\n        print(f\"Function took {end - start:.2f} seconds\")\n        return result\n    return wrapper\n\n@timing_decorator\ndef slow_function():\n    time.sleep(1)\n    return \"Done\"\n```\n\n### Context Managers\n\n```python\nclass DatabaseConnection:\n    def __enter__(self):\n        print(\"Connecting to database\")\n        return self\n    \n    def __exit__(self, exc_type, exc_val, exc_tb):\n        print(\"Closing database connection\")\n        return False\n```\n\n## Links and References\n\n- [Python Documentation](https://docs.python.org/)\n- [PEP 8 Style Guide](https://www.python.org/dev/peps/pep-0008/)\n\n## Conclusion\n\nThis tutorial covered advanced Python concepts including decorators and context managers.\n\n> **Note**: These examples are for educational purposes only.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Advanced Python Tutorial - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Advanced Python Tutorial\n\n## Table of Contents\n\n1. [Introduction](#introduction)\n2. [Advanced Concepts](#advanced-concepts)\n3. [Code Examples](#code-examples)\n\n## Introduction\n\nThis is an advanced tutorial covering multiple concepts.\n\n### Prerequisites\n\n- Python 3.8+\n- Basic understanding of OOP\n\n## Advanced Concepts\n\n### Decorators\n\n```python\ndef timing_decorator(func):\n    import time\n    def wrapper(*args, **kwargs):\n        start = time.time()\n        result = func(*args, **kwargs)\n        end = time.time()\n        print(f\"Function took {end - start:.2f} seconds\")\n        return result\n    return wrapper\n\n@timing_decorator\ndef slow_function():\n    time.sleep(1)\n    return \"Done\"\n```\n\n### Context Managers\n\n```python\nclass DatabaseConnection:\n    def __enter__(self):\n        print(\"Connecting to database\")\n        return self\n    \n    def __exit__(self, exc_type, exc_val, exc_tb):\n        print(\"Closing database connection\")\n        return False\n```\n\n## Links and References\n\n- [Python Documentation](https://docs.python.org/)\n- [PEP 8 Style Guide](https://www.python.org/dev/peps/pep-0008/)\n\n## Conclusion\n\nThis tutorial covered advanced Python concepts including decorators and context managers.\n\n> **Note**: These examples are for educational purposes only.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "a250e6a2-c07d-4419-8316-0c76e305fd76",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "05d22ce2-68dd-424b-a7d4-41bf6334bca5",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "fda5d891-af06-4b84-8416-e4896a666412",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "da3093a4-856e-4d94-87fc-ff61c2f39ed1",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "10209590-9206-4893-ad0f-f0c2ca70270c",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "e6227124-2e4c-4fcc-b2d9-d13ff19cacc0",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "faff26f4-24a7-4ee3-b134-7664e1b2991e",
+    "title": "Advanced Python Tutorial",
+    "excerpt": " Advanced Python Tutorial",
+    "content": {
+      "beginner": "# Advanced Python Tutorial - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Advanced Python Tutorial\n## Table of Contents\n1. [Introduction](#introduction)\n2. [Advanced Concepts](#advanced-concepts)\n3. [Code Examples](#code-examples)\n## Introduction\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Advanced Python Tutorial - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Advanced Python Tutorial\n\n## Table of Contents\n\n1. [Introduction](#introduction)\n2. [Advanced Concepts](#advanced-concepts)\n3. [Code Examples](#code-examples)\n\n## Introduction\n\nThis is an advanced tutorial covering multiple concepts.\n\n### Prerequisites\n\n- Python 3.8+\n- Basic understanding of OOP\n\n## Advanced Concepts\n\n### Decorators\n\n```python\ndef timing_decorator(func):\n    import time\n    def wrapper(*args, **kwargs):\n        start = time.time()\n        result = func(*args, **kwargs)\n        end = time.time()\n        print(f\"Function took {end - start:.2f} seconds\")\n        return result\n    return wrapper\n\n@timing_decorator\ndef slow_function():\n    time.sleep(1)\n    return \"Done\"\n```\n\n### Context Managers\n\n```python\nclass DatabaseConnection:\n    def __enter__(self):\n        print(\"Connecting to database\")\n        return self\n    \n    def __exit__(self, exc_type, exc_val, exc_tb):\n        print(\"Closing database connection\")\n        return False\n```\n\n## Links and References\n\n- [Python Documentation](https://docs.python.org/)\n- [PEP 8 Style Guide](https://www.python.org/dev/peps/pep-0008/)\n\n## Conclusion\n\nThis tutorial covered advanced Python concepts including decorators and context managers.\n\n> **Note**: These examples are for educational purposes only.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Advanced Python Tutorial - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Advanced Python Tutorial\n\n## Table of Contents\n\n1. [Introduction](#introduction)\n2. [Advanced Concepts](#advanced-concepts)\n3. [Code Examples](#code-examples)\n\n## Introduction\n\nThis is an advanced tutorial covering multiple concepts.\n\n### Prerequisites\n\n- Python 3.8+\n- Basic understanding of OOP\n\n## Advanced Concepts\n\n### Decorators\n\n```python\ndef timing_decorator(func):\n    import time\n    def wrapper(*args, **kwargs):\n        start = time.time()\n        result = func(*args, **kwargs)\n        end = time.time()\n        print(f\"Function took {end - start:.2f} seconds\")\n        return result\n    return wrapper\n\n@timing_decorator\ndef slow_function():\n    time.sleep(1)\n    return \"Done\"\n```\n\n### Context Managers\n\n```python\nclass DatabaseConnection:\n    def __enter__(self):\n        print(\"Connecting to database\")\n        return self\n    \n    def __exit__(self, exc_type, exc_val, exc_tb):\n        print(\"Closing database connection\")\n        return False\n```\n\n## Links and References\n\n- [Python Documentation](https://docs.python.org/)\n- [PEP 8 Style Guide](https://www.python.org/dev/peps/pep-0008/)\n\n## Conclusion\n\nThis tutorial covered advanced Python concepts including decorators and context managers.\n\n> **Note**: These examples are for educational purposes only.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "ac7b2de3-45ea-482e-8bdc-95aec17a1a9f",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "196778b5-f3ae-4a6d-92b3-cbf18b886855",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "efe49d37-1ebd-43fd-a621-283d993f4c43",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "ac58e872-039b-47ca-af34-486d00eef732",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "89fb4733-ef07-4b09-b531-83d01971c96d",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "a3ceca52-131e-4f17-9534-4438137eca6a",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "948b4f36-9142-4316-afef-7fc0ef642e63",
+    "title": "Advanced Python Tutorial",
+    "excerpt": " Advanced Python Tutorial",
+    "content": {
+      "beginner": "# Advanced Python Tutorial - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Advanced Python Tutorial\n## Table of Contents\n1. [Introduction](#introduction)\n2. [Advanced Concepts](#advanced-concepts)\n3. [Code Examples](#code-examples)\n## Introduction\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Advanced Python Tutorial - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Advanced Python Tutorial\n\n## Table of Contents\n\n1. [Introduction](#introduction)\n2. [Advanced Concepts](#advanced-concepts)\n3. [Code Examples](#code-examples)\n\n## Introduction\n\nThis is an advanced tutorial covering multiple concepts.\n\n### Prerequisites\n\n- Python 3.8+\n- Basic understanding of OOP\n\n## Advanced Concepts\n\n### Decorators\n\n```python\ndef timing_decorator(func):\n    import time\n    def wrapper(*args, **kwargs):\n        start = time.time()\n        result = func(*args, **kwargs)\n        end = time.time()\n        print(f\"Function took {end - start:.2f} seconds\")\n        return result\n    return wrapper\n\n@timing_decorator\ndef slow_function():\n    time.sleep(1)\n    return \"Done\"\n```\n\n### Context Managers\n\n```python\nclass DatabaseConnection:\n    def __enter__(self):\n        print(\"Connecting to database\")\n        return self\n    \n    def __exit__(self, exc_type, exc_val, exc_tb):\n        print(\"Closing database connection\")\n        return False\n```\n\n## Links and References\n\n- [Python Documentation](https://docs.python.org/)\n- [PEP 8 Style Guide](https://www.python.org/dev/peps/pep-0008/)\n\n## Conclusion\n\nThis tutorial covered advanced Python concepts including decorators and context managers.\n\n> **Note**: These examples are for educational purposes only.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Advanced Python Tutorial - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Advanced Python Tutorial\n\n## Table of Contents\n\n1. [Introduction](#introduction)\n2. [Advanced Concepts](#advanced-concepts)\n3. [Code Examples](#code-examples)\n\n## Introduction\n\nThis is an advanced tutorial covering multiple concepts.\n\n### Prerequisites\n\n- Python 3.8+\n- Basic understanding of OOP\n\n## Advanced Concepts\n\n### Decorators\n\n```python\ndef timing_decorator(func):\n    import time\n    def wrapper(*args, **kwargs):\n        start = time.time()\n        result = func(*args, **kwargs)\n        end = time.time()\n        print(f\"Function took {end - start:.2f} seconds\")\n        return result\n    return wrapper\n\n@timing_decorator\ndef slow_function():\n    time.sleep(1)\n    return \"Done\"\n```\n\n### Context Managers\n\n```python\nclass DatabaseConnection:\n    def __enter__(self):\n        print(\"Connecting to database\")\n        return self\n    \n    def __exit__(self, exc_type, exc_val, exc_tb):\n        print(\"Closing database connection\")\n        return False\n```\n\n## Links and References\n\n- [Python Documentation](https://docs.python.org/)\n- [PEP 8 Style Guide](https://www.python.org/dev/peps/pep-0008/)\n\n## Conclusion\n\nThis tutorial covered advanced Python concepts including decorators and context managers.\n\n> **Note**: These examples are for educational purposes only.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "174c9b21-f3d0-4cb7-9e4e-5f8d23afefa3",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "5db362f9-5316-4057-918a-d49d89f30b81",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "5f0af6a1-a854-40f1-b90d-550e90eef338",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
+  },
+  {
+    "id": "456106d8-0b41-4351-9408-2b20e5848349",
+    "title": "Test Blog Post",
+    "excerpt": " Test Blog Post",
+    "content": {
+      "beginner": "# Test Blog Post - Beginner's Guide\n\n## Introduction for Beginners\n\nThis is a simplified version of the content, perfect for those just starting out.\n\n### Key Concepts Explained Simply\n\n# Test Blog Post\nThis is a test blog post with markdown content.\n## Introduction\nThis is the introduction section with meaningful content.\n### Key Points\n\n[Content simplified for beginners...]\n\n### Summary\n\nThis beginner version breaks down complex topics into easy-to-understand concepts.\n\n**Note: This is mock content. In production, AWS Bedrock will generate appropriate beginner-level content.**\n",
+      "intermediate": "# Test Blog Post - Comprehensive Guide\n\n## Overview\n\nThis guide provides a balanced view of the topic with practical examples.\n\n### Detailed Explanation\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Practical Applications\n\nThis intermediate version includes the original content with additional context and examples.\n\n**Note: This is mock content. In production, AWS Bedrock will generate enhanced intermediate-level content.**\n",
+      "expert": "# Test Blog Post - Expert Deep Dive\n\n## Advanced Concepts\n\nThis expert-level guide explores advanced topics and edge cases.\n\n### Technical Deep Dive\n\n# Test Blog Post\n\nThis is a test blog post with markdown content.\n\n## Introduction\n\nThis is the introduction section with meaningful content.\n\n### Key Points\n\n- Important point 1\n- Important point 2\n- Important point 3\n\n```python\ndef hello_world():\n    print(\"Hello, World!\")\n```\n\n## Conclusion\n\nThis is the conclusion section.\n\n\n### Advanced Techniques and Optimizations\n\n- Performance considerations\n- Scalability patterns\n- Security implications\n- Best practices for production\n\n### References and Further Reading\n\nThis expert version includes advanced concepts and professional insights.\n\n**Note: This is mock content. In production, AWS Bedrock will generate sophisticated expert-level content with advanced topics.**\n"
+    },
+    "author": {
+      "name": "Tech Writer",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TechWriter"
+    },
+    "publishedAt": "2025-07-14",
+    "readTime": "1 min read",
+    "tags": [
+      "Tech",
+      "Tutorial",
+      "Documentation"
+    ],
+    "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    "avgRating": 0.0,
+    "totalRatings": 0,
+    "docType": "community",
+    "teamInfo": null
   }
 ]

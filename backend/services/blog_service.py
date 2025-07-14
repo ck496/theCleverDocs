@@ -143,6 +143,36 @@ class BlogService:
                 return adapted_blog
         
         return target_blog
+    
+    def add_blog(self, blog: Blog) -> None:
+        """Add a new blog to the shared data store"""
+        try:
+            # Load current blogs
+            blogs = self.load_blogs_from_shared()
+            
+            # Convert new blog to dict and add to list
+            blog_dict = blog.dict()
+            blogs_data = [b.dict() for b in blogs]
+            blogs_data.append(blog_dict)
+            
+            # Save back to shared/data/blogs.json
+            shared_data_path = os.path.join(
+                os.path.dirname(__file__), 
+                "..", "..", "shared", "data", "blogs.json"
+            )
+            shared_data_path = os.path.normpath(shared_data_path)
+            
+            with open(shared_data_path, 'w') as f:
+                json.dump(blogs_data, f, indent=2)
+            
+            # Clear cache to force reload
+            self._cached_blogs = None
+            
+            logger.info(f"Successfully added blog {blog.id} to shared data")
+            
+        except Exception as e:
+            logger.error(f"Error adding blog: {str(e)}")
+            raise HTTPException(status_code=500, detail="Failed to save blog")
 
 # Global service instance
 blog_service = BlogService()

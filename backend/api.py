@@ -4,7 +4,9 @@ import logging
 import time
 
 from models.blog import BlogsResponse, BlogResponse
+from models.upload import MarkdownUploadRequest, UploadResponse
 from services.blog_service import blog_service
+from services.upload_service import UploadService
 from core.cors import configure_cors
 
 # Configure logging for CleverDocs backend
@@ -22,6 +24,9 @@ app = FastAPI(
 
 # Configure CORS
 configure_cors(app)
+
+# Initialize services
+upload_service = UploadService()
 
 @app.get("/")
 def read_root():
@@ -133,4 +138,49 @@ async def get_blog_by_id(
     except Exception as e:
         processing_time_ms = int((time.time() - start_time) * 1000)
         logger.error(f"GET /blogs/{blog_id} unexpected error after {processing_time_ms}ms: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+@app.post("/api/upload/markdown", response_model=UploadResponse, status_code=201)
+async def upload_markdown(request: MarkdownUploadRequest):
+    """
+    Upload markdown content and generate multi-level blog
+    
+    - **filename**: Original filename (must end with .md)
+    - **content**: Markdown content (max 1MB)
+    - **metadata**: Upload metadata including source
+    
+    Returns blog ID and processing information for the generated blog.
+    """
+    start_time = time.time()
+    
+    try:
+        # Process markdown upload using service
+        result = await upload_service.process_markdown_upload(request)
+        
+        # Calculate processing time
+        processing_time_ms = int((time.time() - start_time) * 1000)
+        
+        # Log success
+        logger.info(f"POST /api/upload/markdown completed in {processing_time_ms}ms "
+                   f"(blog_id: {result['blog_id']})")
+        
+        # Alert if performance target exceeded (5 seconds for upload/generation)
+        if processing_time_ms > 5000:
+            logger.warning(f"Performance target exceeded: {processing_time_ms}ms > 5000ms")
+        
+        # Return structured response
+        return UploadResponse(
+            status="success",
+            message="Markdown uploaded and blog generated successfully",
+            data=result
+        )
+        
+    except ValueError as e:
+        # Handle validation errors
+        processing_time_ms = int((time.time() - start_time) * 1000)
+        logger.warning(f"POST /api/upload/markdown validation error in {processing_time_ms}ms: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        processing_time_ms = int((time.time() - start_time) * 1000)
+        logger.error(f"POST /api/upload/markdown unexpected error after {processing_time_ms}ms: {e}")
         raise HTTPException(status_code=500, detail="Internal server error")
