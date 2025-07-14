@@ -90,8 +90,8 @@ description: |
   section: "🐍 Backend Standards (FastAPI + Python)"
   why: Backend patterns, error handling, naming conventions
 
-- file: docs/development/TESTING.md
-  why: Comprehensive testing guidelines, 3-test pattern, coverage requirements
+- file: docs/development/TESTING_BACKEND.md
+  why: Backend testing patterns, pytest configuration, 3-test pattern for services
 
 - file: docs/PRDs/CleverDocsPRD.md
   why: Detailed business requirements and user goals

@@ -129,3 +129,8 @@ Add new sub-tasks or TODOs discovered during development to TASK.md under a “D
 ---
 
 **For detailed patterns, testing guidelines, and security requirements, see files in `docs/development/`**
+
+**Testing Documentation**:
+- `docs/development/TESTING_OVERVIEW.md` → General testing philosophy and requirements
+- `docs/development/TESTING_BACKEND.md` → Backend testing with pytest and FastAPI
+- `docs/development/TESTING_FRONTEND.md` → Frontend testing with Vitest and React Testing Library
