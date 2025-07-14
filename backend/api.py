@@ -1,9 +1,9 @@
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Path
 from typing import Optional
 import logging
 import time
 
-from models.blog import BlogsResponse
+from models.blog import BlogsResponse, BlogResponse
 from services.blog_service import blog_service
 from core.cors import configure_cors
 
@@ -30,15 +30,17 @@ def read_root():
 @app.get("/blogs", response_model=BlogsResponse)
 async def get_blogs(
     docType: Optional[str] = Query(None, description="Filter by document type: 'official' or 'community'"),
-    tags: Optional[str] = Query(None, description="Filter by tags (comma-separated)")
+    tags: Optional[str] = Query(None, description="Filter by tags (comma-separated)"),
+    expertiseLevel: Optional[str] = Query(None, description="Expertise level: 'beginner', 'intermediate', or 'expert'")
 ) -> BlogsResponse:
     """
-    Get all blogs with optional filtering by docType and tags.
+    Get all blogs with optional filtering by docType, tags, and expertise level.
     
     - **docType**: Filter by document type ('official' or 'community')
     - **tags**: Filter by tags (comma-separated, e.g., 'React,Frontend')
+    - **expertiseLevel**: Filter by expertise level ('beginner', 'intermediate', or 'expert')
     
-    Returns blog data from shared/data/blogs.json with metadata.
+    Returns blog data from shared/data/blogs.json with content adapted to expertise level when available.
     """
     start_time = time.time()
     
@@ -52,7 +54,7 @@ async def get_blogs(
             parsed_tags = [tag.strip() for tag in tags.split(",") if tag.strip()]
         
         # Apply filters using service
-        filtered_blogs = blog_service.get_filtered_blogs(docType, parsed_tags)
+        filtered_blogs = blog_service.get_filtered_blogs(docType, parsed_tags, expertiseLevel)
         
         # Calculate processing time
         processing_time_ms = int((time.time() - start_time) * 1000)
@@ -81,4 +83,54 @@ async def get_blogs(
     except Exception as e:
         processing_time_ms = int((time.time() - start_time) * 1000)
         logger.error(f"GET /blogs unexpected error after {processing_time_ms}ms: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+@app.get("/blogs/{blog_id}", response_model=BlogResponse)
+async def get_blog_by_id(
+    blog_id: str = Path(..., description="The ID of the blog to retrieve"),
+    expertiseLevel: Optional[str] = Query(None, description="Expertise level: 'beginner', 'intermediate', or 'expert'")
+) -> BlogResponse:
+    """
+    Get a specific blog by ID with optional expertise level adaptation.
+    
+    - **blog_id**: The unique identifier of the blog to retrieve
+    - **expertiseLevel**: Filter by expertise level ('beginner', 'intermediate', or 'expert')
+    
+    Returns the blog data with content adapted to expertise level when available.
+    """
+    start_time = time.time()
+    
+    try:
+        # Get blog by ID using service
+        blog = blog_service.get_blog_by_id(blog_id, expertiseLevel)
+        
+        # Calculate processing time
+        processing_time_ms = int((time.time() - start_time) * 1000)
+        
+        if blog is None:
+            logger.warning(f"GET /blogs/{blog_id} blog not found in {processing_time_ms}ms")
+            raise HTTPException(status_code=404, detail=f"Blog with ID '{blog_id}' not found")
+        
+        # Log performance
+        logger.info(f"GET /blogs/{blog_id} completed in {processing_time_ms}ms "
+                   f"(expertise_level: {expertiseLevel or 'none'})")
+        
+        # Alert if performance target exceeded (100ms for single item operations)
+        if processing_time_ms > 100:
+            logger.warning(f"Performance target exceeded: {processing_time_ms}ms > 100ms")
+        
+        # Return structured response
+        return BlogResponse(
+            status="success",
+            data=blog
+        )
+        
+    except HTTPException:
+        # Re-raise HTTP exceptions (validation errors, 404, etc.)
+        processing_time_ms = int((time.time() - start_time) * 1000)
+        logger.warning(f"GET /blogs/{blog_id} failed validation in {processing_time_ms}ms")
+        raise
+    except Exception as e:
+        processing_time_ms = int((time.time() - start_time) * 1000)
+        logger.error(f"GET /blogs/{blog_id} unexpected error after {processing_time_ms}ms: {e}")
         raise HTTPException(status_code=500, detail="Internal server error")

@@ -13,7 +13,7 @@ class Blog(BaseModel):
     id: str
     title: str = Field(..., min_length=1, max_length=200)
     excerpt: str = Field(..., min_length=10, max_length=500)
-    content: str = Field(..., min_length=10)
+    content: dict = Field(..., description="Content at different expertise levels")
     author: Author
     publishedAt: str = Field(..., pattern=r"^\d{4}-\d{2}-\d{2}$")
     readTime: str = Field(..., pattern=r"^\d+ min read$")
@@ -29,3 +29,7 @@ class BlogsResponse(BaseModel):
     data: List[Blog]
     total: int
     filteredTotal: int
+
+class BlogResponse(BaseModel):
+    status: str
+    data: Blog

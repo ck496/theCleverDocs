@@ -42,8 +42,8 @@ class BlogService:
             logger.error(f"Error loading blog data: {e}")
             raise HTTPException(status_code=500, detail="Internal server error")
 
-    def filter_blogs(self, blogs: List[Blog], doc_type: Optional[str], tags: Optional[List[str]]) -> List[Blog]:
-        """Filter blogs by docType and tags with comprehensive validation."""
+    def filter_blogs(self, blogs: List[Blog], doc_type: Optional[str], tags: Optional[List[str]], expertise_level: Optional[str] = None) -> List[Blog]:
+        """Filter blogs by docType, tags, and adapt content for expertise level."""
         if not blogs:
             logger.warning("No blogs available for filtering")
             return []
@@ -77,16 +77,72 @@ class BlogService:
             ]
             logger.info(f"Filtered by tags {tags_lower}: {len(filtered)} results")
         
+        # Expertise level content adaptation
+        if expertise_level:
+            expertise_level = expertise_level.strip().lower()
+            if expertise_level not in ["beginner", "intermediate", "expert"]:
+                logger.warning(f"Invalid expertiseLevel requested: {expertise_level}")
+                raise HTTPException(
+                    status_code=400, 
+                    detail="Invalid expertiseLevel. Must be 'beginner', 'intermediate', or 'expert'"
+                )
+            
+            # Adapt content for blogs that have expertise levels
+            adapted_blogs = []
+            for blog in filtered:
+                if isinstance(blog.content, dict) and expertise_level in blog.content:
+                    # Create new blog with content adapted for expertise level
+                    adapted_blog = blog.model_copy(deep=True)
+                    adapted_blog.content = blog.content[expertise_level]
+                    adapted_blogs.append(adapted_blog)
+                else:
+                    # Keep original blog if no expertise level available
+                    adapted_blogs.append(blog)
+            
+            filtered = adapted_blogs
+            logger.info(f"Adapted content for expertise level '{expertise_level}': {len([b for b in filtered if isinstance(b.content, dict)])} blogs had expertise levels")
+        
         return filtered
 
     def get_all_blogs(self) -> List[Blog]:
         """Get all blogs."""
         return self.load_blogs_from_shared()
     
-    def get_filtered_blogs(self, doc_type: Optional[str] = None, tags: Optional[List[str]] = None) -> List[Blog]:
-        """Get filtered blogs by docType and/or tags."""
+    def get_filtered_blogs(self, doc_type: Optional[str] = None, tags: Optional[List[str]] = None, expertise_level: Optional[str] = None) -> List[Blog]:
+        """Get filtered blogs by docType, tags, and/or expertise level."""
         all_blogs = self.load_blogs_from_shared()
-        return self.filter_blogs(all_blogs, doc_type, tags)
+        return self.filter_blogs(all_blogs, doc_type, tags, expertise_level)
+    
+    def get_blog_by_id(self, blog_id: str, expertise_level: Optional[str] = None) -> Optional[Blog]:
+        """Get a specific blog by ID with optional expertise level adaptation."""
+        all_blogs = self.load_blogs_from_shared()
+        
+        # Find blog by ID
+        target_blog = None
+        for blog in all_blogs:
+            if blog.id == blog_id:
+                target_blog = blog
+                break
+        
+        if not target_blog:
+            return None
+        
+        # Apply expertise level adaptation if requested
+        if expertise_level:
+            # Validate expertise level
+            if expertise_level not in ["beginner", "intermediate", "expert"]:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Invalid expertiseLevel. Must be 'beginner', 'intermediate', or 'expert'"
+                )
+            
+            # Adapt content if expertise level is available
+            if isinstance(target_blog.content, dict) and expertise_level in target_blog.content:
+                adapted_blog = target_blog.model_copy(deep=True)
+                adapted_blog.content = target_blog.content[expertise_level]
+                return adapted_blog
+        
+        return target_blog
 
 # Global service instance
 blog_service = BlogService()
