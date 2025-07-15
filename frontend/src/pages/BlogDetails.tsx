@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 import RatingBadge from "@/components/RatingBadge";
 import BlogRater from "@/components/BlogRater";
+import MarkdownRenderer from "@/components/MarkdownRenderer";
 import { useParams, Link as RouterLink } from "react-router-dom";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useBlogs } from "@/hooks/useBlogs";
@@ -53,8 +54,8 @@ const BlogDetails = () => {
     setExpertiseLevel(level);
   };
 
-  // Helper function with fallback handling
-  const getCurrentContent = useMemo((): string => {
+  // Memoized content for performance - MUST be before any conditional returns
+  const currentContent = useMemo(() => {
     if (blog && typeof blog.content === 'object') {
       return blog.content[expertiseLevel] || 
              blog.content.intermediate || 
@@ -76,7 +77,8 @@ const BlogDetails = () => {
     );
   }
 
-  if (!blog) {
+  // Early return if no blog found after loading
+  if (!loading && !blog) {
     return (
       <Box bg={bgColor} minH="100vh">
         <Header />
@@ -100,69 +102,18 @@ const BlogDetails = () => {
     );
   }
 
-  // Simple markdown-like content renderer
-  const renderContent = (content: string) => {
-    const lines = content.split("\n");
-    return lines.map((line, index) => {
-      if (line.startsWith("# ")) {
-        return (
-          <Heading
-            key={index}
-            as="h1"
-            size="xl"
-            mb={4}
-            mt={index > 0 ? 8 : 0}
-            color={headingColor}
-          >
-            {line.substring(2)}
-          </Heading>
-        );
-      }
-      if (line.startsWith("## ")) {
-        return (
-          <Heading
-            key={index}
-            as="h2"
-            size="lg"
-            mb={3}
-            mt={6}
-            color={headingColor}
-          >
-            {line.substring(3)}
-          </Heading>
-        );
-      }
-      if (line.startsWith("### ")) {
-        return (
-          <Heading
-            key={index}
-            as="h3"
-            size="md"
-            mb={2}
-            mt={4}
-            color={headingColor}
-          >
-            {line.substring(4)}
-          </Heading>
-        );
-      }
-      if (line.trim() === "") {
-        return <Box key={index} h={4} />;
-      }
-      if (line.startsWith("- ")) {
-        return (
-          <Text key={index} ml={4} mb={1} color={textColor}>
-            • {line.substring(2)}
-          </Text>
-        );
-      }
-      return (
-        <Text key={index} mb={3} lineHeight="1.7" color={textColor}>
-          {line}
-        </Text>
-      );
-    });
-  };
+  // Don't render if still loading or no blog
+  if (loading || !blog) {
+    return (
+      <Box bg={bgColor} minH="100vh">
+        <Header />
+        <Center py={20} mt={16}>
+          <Spinner size="xl" color="blue.500" />
+        </Center>
+        <Footer />
+      </Box>
+    );
+  }
 
   return (
     <Box bg={bgColor} minH="100vh">
@@ -323,7 +274,9 @@ const BlogDetails = () => {
           </Box>
 
           {/* Content */}
-          <Box>{renderContent(getCurrentContent)}</Box>
+          <Box>
+            <MarkdownRenderer content={currentContent} />
+          </Box>
 
           <Divider />
 

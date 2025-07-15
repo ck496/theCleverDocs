@@ -1,8 +1,210 @@
-# Frontend PRP: Expertise Level Slider for BlogDetails Page
+# Frontend Architecture Documentation
 
-## Feature Overview
+## Overview
+CleverDocs frontend is a React-based application built with TypeScript and Vite, designed to provide an intuitive platform for viewing and interacting with technical documentation and blog content. The application supports multi-level expertise content delivery and community engagement features.
 
-Implement a minimalist, aesthetically pleasing expertise level slider for the BlogDetails page that allows users to switch between beginner, intermediate, and expert versions of blog content. This enables key feature "5.2 Custom content for each readers level of expertise" from the PRD.
+## Technology Stack
+
+### Core Technologies
+- **React 18.2.0** - Component-based UI library
+- **TypeScript 5.8.2** - Type-safe JavaScript
+- **Vite 6.2.3** - Build tool and development server
+- **React Router 6.23.1** - Client-side routing
+
+### UI Libraries
+- **Chakra UI 2.10.9** - Primary component library
+- **Radix UI** - Headless UI primitives for custom components
+- **Tailwind CSS 3.4.1** - Utility-first CSS framework
+- **Framer Motion 10.18.0** - Animation library
+- **Lucide React** - Icon library
+
+### State Management & Data
+- **React Hook Form 7.51.5** - Form handling
+- **Axios 1.10.0** - HTTP client
+- **Zod 3.23.8** - Schema validation
+
+## Project Structure
+
+```
+frontend/src/
+├── components/          # Reusable UI components
+│   ├── ui/             # Base UI components (shadcn/ui style)
+│   ├── BlogRater.tsx   # Rating system for community blogs
+│   ├── ExpertiseSlider.tsx # Dynamic content level selector
+│   └── ...
+├── pages/              # Route components
+│   ├── BlogDetails.tsx # Main blog viewing page
+│   ├── BlogsGrid.tsx   # Blog listing page
+│   └── ...
+├── hooks/              # Custom React hooks
+│   ├── useBlogs.ts     # Blog data management
+│   └── useUpload.ts    # File upload functionality
+├── data/               # Static data and types
+├── services/           # External API services
+└── types/              # TypeScript type definitions
+```
+
+## Key Features
+
+### 1. Multi-Level Expertise System
+- **Dynamic Content Delivery**: Each blog supports three expertise levels (Beginner, Intermediate, Expert)
+- **Interactive Slider**: Users can switch content levels in real-time
+- **Contextual Learning**: Content adapts to user's knowledge level
+
+### 2. Dual Documentation Types
+- **Community Blogs**: User-generated content with rating systems
+- **Official Documentation**: Authoritative content from the team
+
+### 3. Advanced Blog Rendering
+- **Current Implementation**: Basic markdown-like renderer (BlogDetails.tsx:104-165)
+- **Issue**: Displays raw markdown syntax instead of properly formatted content
+- **Planned Enhancement**: Rich markdown rendering with proper code syntax highlighting
+
+### 4. Rating & Engagement System
+- **Community Ratings**: 5-star rating system for community content
+- **Real-time Updates**: Immediate feedback on user interactions
+- **Rating Analytics**: Average ratings and total rating counts
+
+## Current Markdown Rendering Implementation
+
+### Problem Statement
+The current blog content rendering displays raw markdown syntax instead of properly formatted content:
+
+```typescript
+// Current basic renderer in BlogDetails.tsx:104-165
+const renderContent = (content: string) => {
+  const lines = content.split("\n");
+  return lines.map((line, index) => {
+    if (line.startsWith("# ")) return <Heading as="h1">{line.substring(2)}</Heading>;
+    if (line.startsWith("## ")) return <Heading as="h2">{line.substring(3)}</Heading>;
+    // ... basic markdown parsing
+  });
+};
+```
+
+### Issues with Current Implementation
+1. **Code Blocks**: Raw markdown syntax visible (```tsx, ```)
+2. **Limited Formatting**: No support for inline code, links, bold/italic
+3. **Poor UX**: Difficult to read technical content
+4. **No Syntax Highlighting**: Code appears as plain text
+
+## API Integration
+
+### Blog Data Structure
+```typescript
+interface Blog {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: {
+    beginner: string;
+    intermediate: string;
+    expert: string;
+  };
+  author: { name: string; avatar: string; };
+  publishedAt: string;
+  readTime: string;
+  tags: string[];
+  coverImage: string;
+  avgRating: number;
+  totalRatings: number;
+  docType: "official" | "community";
+  teamInfo?: { teamName: string; email: string; };
+}
+```
+
+### Data Sources
+- **Primary**: Backend API (`/api/blogs`)
+- **Fallback**: Static data file (`/data/blogs.ts`)
+
+## Current Blog Viewing Architecture
+
+### BlogDetails Page (`src/pages/BlogDetails.tsx`)
+- **Route**: `/blog/:id`
+- **Key Components**: ExpertiseSlider, BlogRater, RatingBadge
+- **State Management**: Local state for expertise level selection
+- **Content Rendering**: Multi-tier content system with expertise-based switching
+
+### Current Features Implemented ✅
+- Dynamic expertise level selection (Beginner/Intermediate/Expert)
+- Content switching based on expertise level
+- Community vs Official blog differentiation
+- Rating system for community blogs
+- Responsive design with Chakra UI
+- Loading states and error handling
+
+### Features Needing Enhancement 🔄
+- **Markdown Rendering**: Replace basic parser with rich markdown support
+- **Code Syntax Highlighting**: Transform code blocks to IDE-like appearance
+- **Interactive Elements**: Add copy-to-clipboard, collapsible sections
+
+## Performance Considerations
+
+### Current Optimizations
+- Component memoization with `useMemo`
+- Lazy loading for route components
+- Efficient re-rendering strategies
+
+### Planned Optimizations
+- Code splitting for markdown renderer
+- Virtual scrolling for long content
+- Image lazy loading
+- Caching strategies
+
+## Testing Strategy
+
+### Current Coverage
+- Component unit tests (ExpertiseSlider.test.tsx)
+- Integration tests for key user flows
+- Performance testing
+
+### Testing Tools
+- Jest/Vitest for unit testing
+- React Testing Library for component testing
+- Cypress for E2E testing (planned)
+
+## Responsive Design
+
+### Breakpoints
+- **Mobile**: < 768px
+- **Tablet**: 768px - 1024px
+- **Desktop**: > 1024px
+
+### Mobile-First Approach
+All components designed mobile-first with progressive enhancement for larger screens.
+
+## Development Guidelines
+
+### Code Standards
+- TypeScript strict mode enabled
+- ESLint configuration for code quality
+- Prettier for code formatting
+- Component composition over inheritance
+
+### File Naming Conventions
+- Components: PascalCase (e.g., `BlogDetails.tsx`)
+- Hooks: camelCase with "use" prefix (e.g., `useBlogs.ts`)
+- Utilities: camelCase (e.g., `formatDate.ts`)
+- Types: PascalCase interfaces (e.g., `Blog`, `User`)
+
+### State Management
+- Local state with `useState` for component-specific data
+- Custom hooks for shared logic
+- Context API for global state (minimal usage)
+
+## Security Considerations
+
+### Content Security
+- Input sanitization for user-generated content
+- XSS prevention in markdown rendering
+- Safe handling of external links
+
+### API Security
+- Request validation
+- Error boundary implementation
+- Secure authentication handling
+
+This documentation serves as the foundation for understanding and extending the CleverDocs frontend architecture, with particular focus on improving the markdown rendering capabilities.
 
 ## Current State Analysis
 
